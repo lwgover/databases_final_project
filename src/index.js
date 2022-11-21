@@ -16,7 +16,7 @@ ReactDOM.render(
     <Routes>
 
       <Route path="/" element={<HomePage/>} />
-      <Route path="/about" element={<TakeQuizzesPage/>} />
+      <Route path="/TakeQuizzesPage" element={<TakeQuizzesPage/>} />
 
     </Routes>
 
