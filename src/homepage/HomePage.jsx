@@ -1,11 +1,10 @@
 import {Link} from "react-router-dom"
 
 function LandingPageButton() {
-
     return <Link to="/about" class="nav-link">
         <button class="btn btn-primary" > 
             <span style={{"font-size": "24px"}}>
-                Click Me!
+                Take a Quiz!
             </span>
         </button>
     </Link>
@@ -20,20 +19,14 @@ function LandingFrameMessage() {
     }
 
     return <div style={style}>
-        
         <div style={{"font-size": "96px"}}>
-            Hello World!!
-        </div>
-        
+            Generic Quiz Website
+        </div> 
         <div style={{"font-size": "36px"}}>
-            This is the landing page and here's some content.
-            How much wood would a woodchuck chuck if a woodchuck would chuck wood?
+            Take quizzes and stuff!
         </div>
-
         <br />
-
         <LandingPageButton />
-
     </div>
 }
 

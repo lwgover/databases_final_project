@@ -6,7 +6,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import Header from "./common/Header"
 import HomePage from "./homepage/HomePage"
-import AboutPage from "./aboutpage/AboutPage"
+import TakeQuizzesPage from "./TakeQuizzesPage/TakeQuizzesPage"
 
 ReactDOM.render(
 
@@ -16,7 +16,7 @@ ReactDOM.render(
     <Routes>
 
       <Route path="/" element={<HomePage/>} />
-      <Route path="/about" element={<AboutPage/>} />
+      <Route path="/about" element={<TakeQuizzesPage/>} />
 
     </Routes>
 
