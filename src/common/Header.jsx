@@ -1,12 +1,11 @@
 import {Link} from "react-router-dom"
 
 function Header() {
-    
     return (
         <nav class="navbar">
             <div class="container-fluid">
 
-                <div>Test1</div>
+                <div>Generic Quiz Website!</div>
 
                 <ul class="nav nav-tabs">
 
@@ -15,7 +14,11 @@ function Header() {
                     </li>
 
                     <li class="nav-item">
-                        <Link to="/about" class="nav-link">About</Link>
+                        <Link to="/TakeQuizzesPage" class="nav-link">Take Quizzes</Link>
+                    </li>
+
+                    <li class="nav-item">
+                        <Link to="/UserPage" class="nav-link">User</Link>
                     </li>
 
                 </ul>
