@@ -20,6 +20,9 @@ function Header() {
                     <li class="nav-item">
                         <Link to="/UserPage" class="nav-link">User</Link>
                     </li>
+                    <li class="nav-item">
+                        <Link to="/login/login.html" class="nav-link">login</Link>
+                    </li>
 
                 </ul>
             </div>
