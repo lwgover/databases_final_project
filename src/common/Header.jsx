@@ -4,11 +4,8 @@ function Header() {
     return (
         <nav class="navbar">
             <div class="container-fluid">
-
                 <div>Generic Quiz Website!</div>
-
                 <ul class="nav nav-tabs">
-
                     <li class="nav-item">
                         <Link to="/" class="nav-link">Home</Link>
                     </li>
@@ -18,10 +15,11 @@ function Header() {
                     </li>
 
                     <li class="nav-item">
-                        <Link to="/UserPage" class="nav-link">User</Link>
+                        <Link to="/User" class="nav-link">User</Link>
                     </li>
+                    
                     <li class="nav-item">
-                        <Link to="/login/login.html" class="nav-link">login</Link>
+                        <Link to="/login" class="nav-link">login</Link>
                     </li>
 
                 </ul>
