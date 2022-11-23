@@ -8,18 +8,19 @@ import Header from "./common/Header"
 import HomePage from "./homepage/HomePage"
 import TakeQuizzesPage from "./TakeQuizzesPage/TakeQuizzesPage"
 import User from "./User/User"
-import loginPage from "./login/login"
+import Login from "./Login/Login"
+import makeQuiz from "./makeQuiz/makeQuiz"
 
 ReactDOM.render(
 
   <BrowserRouter>
-
     <Header/>
     <Routes>
       <Route path="/" element={<HomePage/>} />
       <Route path="/TakeQuizzesPage" element={<TakeQuizzesPage/>} />
+      <Route path="/makeQuiz" element={<makeQuiz/>} />
+      <Route path="/Login" element={<Login/>} />
       <Route path="/User" element={<User/>} />
-      <Route path="/login" element={<loginPage/>} />
 
     </Routes>
 
