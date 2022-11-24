@@ -7,9 +7,9 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Header from "./common/Header"
 import HomePage from "./homepage/HomePage"
 import TakeQuizzesPage from "./TakeQuizzesPage/TakeQuizzesPage"
+import MakeQuiz from "./makeQuiz/makeQuiz"
 import User from "./User/User"
 import Login from "./Login/Login"
-import makeQuiz from "./makeQuiz/makeQuiz"
 
 ReactDOM.render(
 
@@ -18,7 +18,7 @@ ReactDOM.render(
     <Routes>
       <Route path="/" element={<HomePage/>} />
       <Route path="/TakeQuizzesPage" element={<TakeQuizzesPage/>} />
-      <Route path="/makeQuiz" element={<makeQuiz/>} />
+      <Route path="/makeQuiz" element={<MakeQuiz/>} />
       <Route path="/Login" element={<Login/>} />
       <Route path="/User" element={<User/>} />
 

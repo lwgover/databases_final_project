@@ -11,10 +11,6 @@ function Header() {
                 </ul>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <Link to="/" class="nav-link">Home</Link>
-                    </li>
-
-                    <li class="nav-item">
                         <Link to="/TakeQuizzesPage" class="nav-link">Take Quizzes</Link>
                     </li>
 
@@ -29,7 +25,6 @@ function Header() {
                     <li class="nav-item">
                         <Link to="/login" class="nav-link">login</Link>
                     </li>
-
                 </ul>
             </div>
         </nav>
