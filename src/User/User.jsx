@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 function UserPage() {
     const style = {
         margin: "auto",
-        padding: "10% 5% 0% 15%",
+        padding: "0% 5% 10% 5%",
         color: "Black"
     }
 
