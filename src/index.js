@@ -21,6 +21,7 @@ function getToken() {
   const userToken = JSON.parse(tokenString);
   return userToken?.token
 }
+
 const token = getToken();
 
 if(token) { // make this !token
