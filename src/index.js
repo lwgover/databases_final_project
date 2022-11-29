@@ -21,14 +21,13 @@ function getToken() {
   const userToken = JSON.parse(tokenString);
   return userToken?.token
 }
+const token = getToken();
 
-function Index(){
-  const [token, setToken] = useState();
-
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
-  return (
+if(token) { // make this !token
+  console.log("hello");
+  <Login setToken={setToken} />
+}else{
+  ReactDOM.render(
     <BrowserRouter>
       <Header/>
       <Routes>
@@ -38,7 +37,8 @@ function Index(){
         <Route path="/makeQuiz" element={<MakeQuiz/>} />
         <Route path="/User" element={<User/>} />
       </Routes>
-    </BrowserRouter>
-  )
+
+    </BrowserRouter>,
+    document.getElementById('root')
+  );
 }
-export default Index;
