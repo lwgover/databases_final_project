@@ -22,13 +22,13 @@ function getToken() {
   return userToken?.token
 }
 
-const token = getToken();
+function Index(){
+  const [token, setToken] = useState();
 
-if(token) { // make this !token
-  console.log("hello");
-  <Login setToken={setToken} />
-}else{
-  ReactDOM.render(
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
+  return (
     <BrowserRouter>
       <Header/>
       <Routes>
@@ -38,8 +38,7 @@ if(token) { // make this !token
         <Route path="/makeQuiz" element={<MakeQuiz/>} />
         <Route path="/User" element={<User/>} />
       </Routes>
-
-    </BrowserRouter>,
-    document.getElementById('root')
-  );
+    </BrowserRouter>
+  )
 }
+export default Index;
