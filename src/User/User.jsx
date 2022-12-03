@@ -8,7 +8,7 @@ function UserPage() {
     }
 
     return <div style={style}>
-        <div style={{"font-size": "96px"}}>
+        <div style={{"fontSize": "96px"}}>
             THIS WILL BE YOUR USERNAME
         </div> 
         <UserStuff />
@@ -24,7 +24,7 @@ function UserStuff() {
     }
 
     return <div style={style}>
-        <div style={{"font-size": "96px"}}>
+        <div style={{"fontSize": "96px"}}>
             User Info
         </div> 
         <br />

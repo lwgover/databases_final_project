@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 function LandingPageButton() {
     return <Link to="/TakeQuizzesPage" class="nav-link">
         <button class="btn btn-primary" > 
-            <span style={{"font-size": "24px"}}>
+            <span style={{"fontSize": "24px"}}>
                 Take a Quiz!
             </span>
         </button>
@@ -19,10 +19,10 @@ function LandingFrameMessage() {
     }
 
     return <div style={style}>
-        <div style={{"font-size": "96px"}}>
+        <div style={{"fontSize": "96px"}}>
             Generic Quiz Website
         </div> 
-        <div style={{"font-size": "36px"}}>
+        <div style={{"fontSize": "36px"}}>
             Take quizzes and stuff!
         </div>
         <br />
@@ -33,9 +33,9 @@ function LandingFrameMessage() {
 function LandingFrame() {
     const style = {
 
-        "background-image": `url("images/background.jpg")`,
-        "background-repeat": "no-repeat",
-        "background-size": "cover",
+        "backgroundImage": `url("images/background.jpg")`,
+        "backgroundRepeat": "no-repeat",
+        "backgroundSize": "cover",
         position: "absolute",
         height: "100%",
         width: "100%"
