@@ -5,6 +5,12 @@
  * Anything not ending in "//EXPORTED" are not currently available for outside access
 */
 
+///// TO DO LIST /////
+//remove picture field from database
+//5 random quizzes method
+//main page
+//search method
+
 "use strict";
 
 //require the package
@@ -157,6 +163,11 @@ function checkQuizID(quizID) {
     return true;
 }
 
+function searchQuizNames(quizName) {
+    let query = 'SELECT * FROM quizzes WHERE quizName LIKE ?';
+    let results = db.prepare(query).all("%" + quizName + "%");
+    return results;
+} //EXPORTED
 
 
 
@@ -209,7 +220,6 @@ function getQuestionID(username, quizName, datePosted, questionNumber) {
 
 ////////// ANSWERS /////////
 //adds an answer to the quiz. Returns false if the question doesn't exist and the add failed, true otherwise
-//@TODO: Sort out what is going on with the answer ID
 function addAnswer(username, quizName, datePosted, questionNumber, answer) {
     //get the questionID
     let questionID = getQuestionID(username, quizName, questionNumber, datePosted);
@@ -229,7 +239,9 @@ function addAnswer(username, quizName, datePosted, questionNumber, answer) {
         }
     }
     
-    let query = "INSERT INTO answers VALUES(?, "
+    let query = "INSERT INTO answers VALUES(?, ?, ?)";
+    db.prepare(query).run(answerID, answer, questionID);
+    return true;
 }
 
 
@@ -259,6 +271,7 @@ module.exports.addQuiz = addQuiz;
 module.exports.getQuizQuestions = getQuizQuestions;
 module.exports.deleteQuiz = deleteQuiz;
 module.exports.quizExists = quizExists;
+module.exports.searchQuizNames = searchQuizNames;
 
 module.exports.addQuestion = addQuestion;
 module.exports.addQuestionByID = addQuestionByID;
