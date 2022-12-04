@@ -5,7 +5,7 @@ const app = express();
 app.use(cors());
 
 app.use('/login', (req, res) => {
-  console.log(req,res)
+  console.log("I got a Submission!")
   res.send({
     token: 'test123'
   });
