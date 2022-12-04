@@ -10,24 +10,9 @@ import TakeQuizzesPage from "./TakeQuizzesPage/TakeQuizzesPage"
 import MakeQuiz from "./makeQuiz/makeQuiz"
 import User from "./User/User"
 import Login from "./Login/Login"
-import useToken from './useToken';
 
-function getToken(){
-  const tokenString = localStorage.getItem('token');
-  const userToken = JSON.parse(tokenString);
-  return userToken?.token;
-}
 
-const [token, setToken] = useState(getToken());
-
-const saveToken = userToken => {
-  localStorage.setItem('token', JSON.stringify(userToken));
-  setToken(userToken.token);
-};
-
-//const { token, setToken } = useToken();
-
-if(!token) { // make this !token
+if(!true) {
   ReactDOM.render(
     <BrowserRouter>
       <Header/>
