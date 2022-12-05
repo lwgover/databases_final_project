@@ -23,7 +23,7 @@ db.pragma('journal_mode = WAL');
 //returns true on success, false on failure
 function addUser(username, hashedPassword) {
     if (!userExists(username)) {
-        let query = `INSERT INTO users VALUES(?, ?)`;
+        let query = 'INSERT INTO users VALUES(?, ?)';
         db.prepare(query).run(username, hashedPassword);
         return true;
     }
@@ -39,7 +39,7 @@ function checkUserPassword(username, hashedPassword) {
         return false;
     }
 
-    let query = `SELECT password FROM users WHERE Username = ?`;
+    let query = 'SELECT password FROM users WHERE username = ?';
     let r = db.prepare(query).get(username);
     //return true or false
     if (hashedPassword === r.password) {
@@ -65,7 +65,7 @@ function userExists(username) {
 //removes a user from the database
 function removeUser(username) {
     if (userExists) {
-        let query = `DELETE * FROM users WHERE Username = ?`;
+        let query = 'DELETE * FROM users WHERE Username = ?';
         db.prepare(query).run(username);
         return true;
     }
