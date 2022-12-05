@@ -35,7 +35,7 @@ function addUser(username, hashedPassword) {
 //checks the password of a user
 //returns true if they match, or false if the username or password is incorrect
 function checkUserPassword(username, hashedPassword) {
-    if (!userExists) {
+    if (!userExists(username)) {
         return false;
     }
 
@@ -64,7 +64,7 @@ function userExists(username) {
 
 //removes a user from the database
 function removeUser(username) {
-    if (userExists) {
+    if (userExists(username)) {
         let query = 'DELETE * FROM users WHERE Username = ?';
         db.prepare(query).run(username);
         return true;
@@ -158,8 +158,8 @@ function checkQuizID(quizID) {
 }
 
 function searchQuizNames(quizName) {
-    let query = 'SELECT * FROM quizzes WHERE quizName LIKE ?';
-    let results = db.prepare(query).all("%" + quizName + "%");
+    let query = 'SELECT * FROM quizzes WHERE quizName LIKE (% || ? || %)';
+    let results = db.prepare(query).all(quizName );
     return results;
 } //EXPORTED
 
