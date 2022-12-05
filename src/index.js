@@ -10,12 +10,14 @@ import TakeQuizzesPage from "./TakeQuizzesPage/TakeQuizzesPage"
 import MakeQuiz from "./makeQuiz/makeQuiz"
 import User from "./User/User"
 import Login from "./Login/Login"
+import SearchBar from "./QuizSearchPage/QuizSearchPage.jsx"
 
 
 if(!true) {
   ReactDOM.render(
     <BrowserRouter>
       <Header/>
+      <SearchBar/>
       <Routes>
         <Route path="/" element={<HomePage/>} />
         <Route path="/TakeQuizzesPage" element={<TakeQuizzesPage/>} />
@@ -30,6 +32,7 @@ if(!true) {
   ReactDOM.render(
     <BrowserRouter>
       <Header/>
+      <SearchBar/>
       <Routes>
         <Route path="/" element={<HomePage/>} />
         <Route path="/TakeQuizzesPage" element={<TakeQuizzesPage/>} />
