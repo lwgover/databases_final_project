@@ -1,6 +1,9 @@
 import React from "react";
+import { index } from "./../index";
 import './makeQuiz.css';
+
 export class makeQuiz extends React.Component {
+    
     constructor(){
         super();
         this.state={count:0,results:0};
