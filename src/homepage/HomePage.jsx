@@ -22,7 +22,7 @@ function LandingFrameMessage() {
         <div style={{"fontSize": "96px"}}>
             Generic Quiz Website
         </div> 
-        <div style={{"font-size": "36px"}}>
+        <div style={{"fontSize": "36px"}}>
             Take quizzes and stuff!
         </div>
         <br />
