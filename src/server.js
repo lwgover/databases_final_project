@@ -25,17 +25,17 @@ app.use('/login', (req, res) => {
 });
 
 
-// app.post('/SearchQuizzes', (req, res) => {
-//   console.log("request recieved");
-  
-//   let searchTerm = req.body;
-//   let results = database.searchQuizNames(searchTerm);
-  
-//   if (results === undefined) {
-//     results = null;
-//   }
-  
-//   res.json(results);
-// });
+app.all('/SearchQuizzes', (req, res) => {
+  console.log("request recieved");
+
+  let searchTerm = req.body.searchTerm;
+  let results = database.searchQuizNames(searchTerm);
+
+  if (results === undefined) {
+    results = null;
+  }
+
+  res.json(results);
+});
 
 app.listen(8080, () => console.log('API is running on http://localhost:8080/login'));

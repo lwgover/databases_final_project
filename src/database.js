@@ -23,7 +23,7 @@ db.pragma('journal_mode = WAL');
 //returns true on success, false on failure
 function addUser(username, hashedPassword) {
     if (!userExists(username)) {
-        let query = `INSERT INTO "Users" VALUES(?, ?)`;
+        let query = `INSERT INTO users VALUES(?, ?)`;
         db.prepare(query).run(username, hashedPassword);
         return true;
     }
@@ -39,7 +39,7 @@ function checkUserPassword(username, hashedPassword) {
         return false;
     }
 
-    let query = `SELECT password FROM Users WHERE Username = ?`;
+    let query = `SELECT password FROM users WHERE Username = ?`;
     let r = db.prepare(query).get(username);
     //return true or false
     if (hashedPassword === r.password) {
@@ -52,7 +52,7 @@ function checkUserPassword(username, hashedPassword) {
 
 //checks if a username is already present in the database
 function userExists(username) {
-    let query = 'SELECT * FROM Users WHERE username = ?';
+    let query = 'SELECT * FROM users WHERE username = ?';
     let result = db.prepare(query).get(username);
     if (result === undefined) {
         return false;
@@ -65,7 +65,7 @@ function userExists(username) {
 //removes a user from the database
 function removeUser(username) {
     if (userExists) {
-        let query = `DELETE * FROM Users WHERE Username = ?`;
+        let query = `DELETE * FROM users WHERE Username = ?`;
         db.prepare(query).run(username);
         return true;
     }
@@ -106,14 +106,14 @@ function addQuiz(username, quizName, datePosted) {
     let quizID = `${username}.${editedName}.${datePosted}`;
 
     //add the quiz to the database
-    let query = "INSERT INTO Quizzes VALUES(?, ?, ?, ?, 0)";
+    let query = "INSERT INTO quizzes VALUES(?, ?, ?, ?, 0)";
     db.prepare(query).run(quizID, quizName, username, datePosted);
     return true;
 } //EXPORTED
 
 //get quiz questions and answers
 function getQuizQuestions(username, quizName, datePosted) {
-    let query = "WITH thisQuiz AS (SELECT * FROM Quizzes WHERE username = ? AND quizName = ? AND datePosted = ?) SELECT * FROM thisQuiz NATURAL JOIN Questions";
+    let query = "WITH thisQuiz AS (SELECT * FROM quizzes WHERE username = ? AND quizName = ? AND datePosted = ?) SELECT * FROM thisQuiz NATURAL JOIN questions";
     let answers = db.prepare(query).all(username, quizName, datePosted);
 } //EXPORTED
 
@@ -132,17 +132,17 @@ function deleteQuiz(username, quizName, datePosted) {
     if (!userExists(username)) {
         return false;
     }
-    if (!quizExists(username, quizName)) {
+    if (!quizExists(username, quizName, datePosted)) {
         return false;
     }
-    let query = "DELETE FROM Quizzes WHERE username = ? AND quizName = ? AND datePosted = ?";
+    let query = "DELETE FROM quizzes WHERE username = ? AND quizName = ? AND datePosted = ?";
     db.prepare(query).run(username, quizName, datePosted);
     return true;
 } //EXPORTED
 
 //returns undefined if the quiz doesn't exist
 function getQuizID(username, quizName, datePosted) {
-    let query = 'SELECT * FROM Quizzes WHERE username = ? AND quizName = ? AND datePosted = ?';
+    let query = 'SELECT * FROM quizzes WHERE username = ? AND quizName = ? AND datePosted = ?';
     let result = db.prepare(query).get(username, quizName, datePosted);
     return result;
 } //EXPORTED
@@ -179,7 +179,7 @@ function addQuestion(username, quizName, datePosted, questionNumber, question) {
     let questionID = quizID + "." + quizNumber;
 
     //insert the question, now that we have the quizID
-    let query = "INSERT INTO Questions VALUES(?, ?, ?, ?)";
+    let query = "INSERT INTO questions VALUES(?, ?, ?, ?)";
     db.prepare(query).run(questionID, question, quizID, questionNumber);
     return true;
 } //EXPORTED
@@ -195,7 +195,7 @@ function addQuestionByID(quizID, question, questionNumber) {
     let qustionID = quizID + "." + questionNumber;
 
     //insert the question, now that we have the quizID
-    let query = "INSERT INTO Questions VALUES(?, ?, ?, ?)";
+    let query = "INSERT INTO questions VALUES(?, ?, ?, ?)";
     db.prepare(query).run(questionID, question, quizID, questionNumber);
 } //EXPORTED
 
@@ -273,7 +273,7 @@ function addAnswerValueByID(answerID, result, value) {
         return false;
     }
 
-    let query = "INSERT INTO answers VALUES(?, ?, ?)";
+    let query = "INSERT INTO answerValues VALUES(?, ?, ?)";
     db.prepare(query).run(answerID, result, value);
     return true;
 } //EXPORTED
@@ -296,13 +296,13 @@ function addQuizResult(quizID, result, description) {
     let query = "INSERT INTO quizResults VALUES(?, ?, ?)";
     db.prepare(query).run(quizID, result, description);
     return true;
-}
+} //EXPORTED
 
 function getQuizResults(quizID) {
     let query = "SELECT * FROM quizResults WHERE quizID = ?";
     let results = db.prepare(query).all(quizID);
     return results;
-}
+} //EXPORTED
 
 
 
@@ -330,3 +330,6 @@ module.exports.getAnswersToOneQuestion = getAnswersToOneQuestion;
 
 module.exports.addAnswerValueByID = addAnswerValueByID;
 module.exports.getAnswerValues = getAnswerValues;
+
+module.exports.addQuizResult = addQuizResult;
+module.exports.getQuizResults = getQuizResults;

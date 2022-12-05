@@ -11,6 +11,7 @@ export class QuizSearchPage extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.queryDatabase = this.queryDatabase.bind(this);
     }
 
     displaySearchResults() {
@@ -52,7 +53,7 @@ export class QuizSearchPage extends React.Component {
         this.setState({hasSearched: true}); //mark that the user has searched at least once since the page loaded
         
         //let databaseSearch = database.searchQuizNames(this.state.value); //search the database
-        let databaseSearch = await queryDatabase(this.state.value);
+        let databaseSearch = await this.queryDatabase(this.state.value);
 
         if (databaseSearch === null) { //if the search didn't find anything,
             this.setState({searchResults: []}); //set the results to an empty array
@@ -71,12 +72,14 @@ export class QuizSearchPage extends React.Component {
     queryDatabase(quizName) {
         console.log("query databse with " + quizName);
 
-        return fetch('http://localhost:8080/login', {
+        return fetch('http://localhost:8080/SearchQuizzes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(quizName)
+            body: JSON.stringify({
+                searchTerm: quizName
+            })
         })
         .then((response) => response.json())
         .then((data) => {return data});
