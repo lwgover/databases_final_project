@@ -15,12 +15,30 @@ app.use('/login', (req, res) => {
   console.log(req.body.username)
   console.log(req.body.password)
 
-  if(database.checkUserPassword(req.body.username,req.body.password)){  //user and password
+  if(true){//database.checkUserPassword(req.body.user,req.body.password)){  //user and password
     res.send({
-      user: "lwgover"
+      user: req.body.username
     });
   }else{
+    res.send({
+      user: "invalid User"
+    });
+  }
+});
 
+const data = require('./examplequiz.json');
+console.log(data);
+app.use('/TakeQuiz', (req, res) => {
+  console.log(req.body);
+  //console.log(req.body.username)
+  //console.log(req.body.password)
+
+  if(true){
+    res.send(data);
+  }else{
+    res.send({
+      user: "invalid User"
+    });
   }
 });
 
@@ -38,4 +56,4 @@ app.use('/SearchQuizzes', (req, res) => {
   res.json(results);
 });
 
-app.listen(8080, () => console.log('API is running on http://localhost:8080/login'));
+app.listen(8080, () => console.log('API is running on http://localhost:8080/'));

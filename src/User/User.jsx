@@ -1,10 +1,6 @@
 import {Link} from "react-router-dom"
 import Parser from 'html-react-parser';
 
-function getUser(user){
-    console.log("class is " + typeof(user));
-    return user;
-}
 
 function UserPage({ username }) {
     const style = {
@@ -15,7 +11,7 @@ function UserPage({ username }) {
 
     return <div style={style}>
         <div style={{"fontSize": "96px"}}>
-            {Parser(JSON.stringify(getUser(username)))}
+            {Parser(username)}
         </div> 
         <UserStuff />
     </div>
@@ -26,12 +22,12 @@ function UserStuff() {
     const style = {
         margin: "auto",
         padding: "10% 35% 10% 15%",
-        color: "white"
+        color: "black"
     }
 
     return <div style={style}>
-        <div style={{"fontSize": "96px"}}>
-            User Info
+        <div style={{"fontSize": "48px"}}>
+            Lots of really useful user information
         </div> 
         <br />
     </div>
