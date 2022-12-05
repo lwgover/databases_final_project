@@ -1,8 +1,8 @@
 import {Link} from "react-router-dom"
 
-function quizSearchPage() {
+function QuizSearchPage() {
     return <div id="searchPage">
-        <script src="quizSearchPage.js"></script>
+        <script src="./src/QuizSearchPage/quizSearchPage.js"></script>
         <h1> Search all quizzes! </h1>
         <span>
             <input type="text" id="searchBox"></input>
@@ -12,3 +12,4 @@ function quizSearchPage() {
         </div>
     </div>
 }
+export default QuizSearchPage;
