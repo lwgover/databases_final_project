@@ -19,6 +19,10 @@ function Header() {
                     </li>
 
                     <li class="nav-item">
+                        <Link to="/SearchQuizzes" class="nav-link">Search Quizzes</Link>
+                    </li>
+
+                    <li class="nav-item">
                         <Link to="/User" class="nav-link">User</Link>
                     </li>
                 </ul>
