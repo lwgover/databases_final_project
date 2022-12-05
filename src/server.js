@@ -1,12 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors')
+const cors = require('cors');
 const app = express();
 
 app.use(cors());
+app.use(bodyParser.json());
 
 app.use('/login', (req, res) => {
-  console.log(req)
+  console.log(req.body)
   res.send({
     token: 'test123'
   });
