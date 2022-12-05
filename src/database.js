@@ -12,7 +12,7 @@ const sqlite = require('better-sqlite3');
 
 //setup the database variable
 const path = require('path');
-const dbPath = path.resolve(__dirname, './sql/wearther_database.db')
+const dbPath = path.resolve(__dirname, './database.db')
 const db = new sqlite(dbPath); //EXPORTED
 db.pragma('journal_mode = WAL');
 
@@ -145,7 +145,7 @@ function getQuizID(username, quizName, datePosted) {
     let query = 'SELECT * FROM Quizzes WHERE username = ? AND quizName = ? AND datePosted = ?';
     let result = db.prepare(query).get(username, quizName, datePosted);
     return result;
-} //exported
+} //EXPORTED
 
 //makes sure the quizID exists, true if it does, false if not
 function checkQuizID(quizID) {

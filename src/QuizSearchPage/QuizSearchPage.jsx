@@ -14,6 +14,8 @@ export class QuizSearchPage extends React.Component {
     }
 
     displaySearchResults() {
+        console.log("displaying results");
+
         if (!(this.state.hasSearched)) {
             return "Please search for a quiz";
         }
@@ -32,7 +34,10 @@ export class QuizSearchPage extends React.Component {
                     Author: {searchResults[i].username};
                 </span>
                 <span className="datePosted">
-                    Posted on: {searchResults.datePosted};
+                    Posted on: {searchResults[i].datePosted};
+                </span>
+                <span className="timesPlayed">
+                    Times played: {searchResults[i].timesPlayed}
                 </span>
             </div>);
             results.push(oneResult);
@@ -42,23 +47,20 @@ export class QuizSearchPage extends React.Component {
 
     //does the actual searching
     async handleSubmit(event) {
-        
+        event.preventDefault();
+        console.log("handling submit button");
         this.setState({hasSearched: true}); //mark that the user has searched at least once since the page loaded
         
         //let databaseSearch = database.searchQuizNames(this.state.value); //search the database
         let databaseSearch = await queryDatabase(this.state.value);
 
-        if (databaseSearch === undefined) { //if the search didn't find anything,
+        if (databaseSearch === null) { //if the search didn't find anything,
             this.setState({searchResults: []}); //set the results to an empty array
         }
 
         else {
             this.setState({searchResults: databaseSearch});
         }
-        
-
-        //This was present in the example I looked at
-        event.preventDefault();
         
     }
 
@@ -67,6 +69,8 @@ export class QuizSearchPage extends React.Component {
     }
 
     queryDatabase(quizName) {
+        console.log("query databse with " + quizName);
+
         return fetch('http://localhost:8080/login', {
             method: 'POST',
             headers: {
