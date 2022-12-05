@@ -145,7 +145,7 @@ function getQuizID(username, quizName, datePosted) {
     let query = 'SELECT * FROM Quizzes WHERE username = ? AND quizName = ? AND datePosted = ?';
     let result = db.prepare(query).get(username, quizName, datePosted);
     return result;
-} 
+} //exported
 
 //makes sure the quizID exists, true if it does, false if not
 function checkQuizID(quizID) {
@@ -156,6 +156,12 @@ function checkQuizID(quizID) {
     }
     return true;
 }
+
+function searchQuizNames(quizName) {
+    let query = 'SELECT * FROM quizzes WHERE quizName LIKE ?';
+    let results = db.prepare(query).all("%" + quizName + "%");
+    return results;
+} //EXPORTED
 
 
 
@@ -209,7 +215,6 @@ function getQuestionID(username, quizName, datePosted, questionNumber) {
 
 ////////// ANSWERS /////////
 //adds an answer to the quiz. Returns false if the question doesn't exist and the add failed, true otherwise
-//@TODO: Sort out what is going on with the answer ID
 function addAnswer(username, quizName, datePosted, questionNumber, answer) {
     //get the questionID
     let questionID = getQuestionID(username, quizName, questionNumber, datePosted);
@@ -229,7 +234,33 @@ function addAnswer(username, quizName, datePosted, questionNumber, answer) {
         }
     }
     
-    let query = "INSERT INTO answers VALUES(?, "
+    let query = "INSERT INTO answers VALUES(?, ?, ?)";
+    db.prepare(query).run(answerID, answer, questionID);
+    return true;
+} //EXPORTED
+
+//gets all the answers for a question
+function getAnswersToOneQuestion(questionID) {
+    let query = "SELECT * FROM answers WHERE questionID = ?";
+    let results = db.prepare(query).all(questionID);
+    return results;
+} //EXPORTED
+
+function getAnswer(questionID, answer) {
+    let query = "SELECT * FROM answers WHERE questionID = ? AND answer = ?";
+    let results = db.prepare(query).all(questionID, answer);
+} //EXPORTED
+
+function answerExists(answerID) {
+    let query = "SELECT * FROM answers WHERE answerID = ?";
+    let result = db.prepare(query).get(answerID);
+
+    if (result === undefined) {
+        return false;
+    }
+    else {
+        return true;
+    }
 }
 
 
@@ -237,13 +268,41 @@ function addAnswer(username, quizName, datePosted, questionNumber, answer) {
 
 ////////// ANSWER VALUES //////////
 //add an answer value
-function addAnswerValueByID(answerID, answer) {
+function addAnswerValueByID(answerID, result, value) {
     if (!answerExists) {
         return false;
     }
-    
+
+    let query = "INSERT INTO answers VALUES(?, ?, ?)";
+    db.prepare(query).run(answerID, result, value);
+    return true;
+} //EXPORTED
+
+function getAnswerValues(answerID) {
+    let query = "SELECT * FROM answerValues WHERE answerID = ?";
+    let results = db.prepare(query).all(answerID);
+    return results;
+} //EXPORTED
+
+
+
+
+////////// QUIZ RESULTS //////////
+function addQuizResult(quizID, result, description) {
+    if (!quizExists) {
+        return false;
+    }
+
+    let query = "INSERT INTO quizResults VALUES(?, ?, ?)";
+    db.prepare(query).run(quizID, result, description);
+    return true;
 }
 
+function getQuizResults(quizID) {
+    let query = "SELECT * FROM quizResults WHERE quizID = ?";
+    let results = db.prepare(query).all(quizID);
+    return results;
+}
 
 
 
@@ -257,8 +316,17 @@ module.exports.userExists = userExists;
 
 module.exports.addQuiz = addQuiz;
 module.exports.getQuizQuestions = getQuizQuestions;
+module.exports.getQuizID = getQuizID;
 module.exports.deleteQuiz = deleteQuiz;
 module.exports.quizExists = quizExists;
+module.exports.searchQuizNames = searchQuizNames;
 
 module.exports.addQuestion = addQuestion;
 module.exports.addQuestionByID = addQuestionByID;
+
+module.exports.addAnswer = addAnswer;
+module.exports.getAnswer = getAnswer;
+module.exports.getAnswersToOneQuestion = getAnswersToOneQuestion;
+
+module.exports.addAnswerValueByID = addAnswerValueByID;
+module.exports.getAnswerValues = getAnswerValues;
