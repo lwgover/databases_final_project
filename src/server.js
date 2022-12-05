@@ -12,12 +12,12 @@ app.use(bodyParser.json());
 
 app.use('/login', (req, res) => {
   console.log(req.body)
-  console.log(req.body.user)
+  console.log(req.body.username)
   console.log(req.body.password)
 
   if(true){//database.checkUserPassword(req.body.user,req.body.password)){  //user and password
     res.send({
-      user: req.body.user
+      user: req.body.username
     });
   }else{
     res.send({

@@ -2,7 +2,6 @@ import {Link} from "react-router-dom"
 import Parser from 'html-react-parser';
 
 function getUser(user){
-    console.log("class is " + typeof(user));
     return user;
 }
 
@@ -15,7 +14,7 @@ function UserPage({ username }) {
 
     return <div style={style}>
         <div style={{"fontSize": "96px"}}>
-            {Parser(JSON.stringify(getUser(username)))}
+            {Parser(getUser(username))}
         </div> 
         <UserStuff />
     </div>
