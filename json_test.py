@@ -1,6 +1,6 @@
 
 import requests
-r = requests.post('http://localhost:8080/login', json={
+r = requests.post('http://localhost:8080/TakeQuiz', json={
   "username": "lwgover",
   "password": 18.00
 })

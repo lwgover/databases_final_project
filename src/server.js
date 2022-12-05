@@ -26,6 +26,22 @@ app.use('/login', (req, res) => {
   }
 });
 
+const data = require('./examplequiz.json');
+console.log(data);
+app.use('/TakeQuiz', (req, res) => {
+  console.log(req.body);
+  //console.log(req.body.username)
+  //console.log(req.body.password)
+
+  if(true){
+    res.send(data);
+  }else{
+    res.send({
+      user: "invalid User"
+    });
+  }
+});
+
 
 app.use('/SearchQuizzes', (req, res) => {
   console.log("request recieved");
@@ -40,4 +56,4 @@ app.use('/SearchQuizzes', (req, res) => {
   res.json(results);
 });
 
-app.listen(8080, () => console.log('API is running on http://localhost:8080/login'));
+app.listen(8080, () => console.log('API is running on http://localhost:8080/'));
