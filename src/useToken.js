@@ -1,27 +1,27 @@
 import { useState } from 'react';
 
-export default function useToken() {
-  const getToken = () => {
-    const tokenString = localStorage.getItem('token');
-    console.log(tokenString);
-    if(tokenString == 'undefined'){
+export default function useuser() {
+  const getUser = () => {
+    const userString = localStorage.getItem('user');
+    console.log(userString);
+    if(userString == 'undefined'){
       console.log("hello Undefined");
     }
-    const userToken = JSON.parse(tokenString);
-    //return 'token';
-    console.log("?" + userToken?.token);
-     return userToken?.token
+    const useruser = JSON.parse(userString);
+    //return 'user';
+    console.log("?" + useruser?.user);
+     return useruser?.user
   };
 
-  const [token, setToken] = useState(getToken());
+  const [user, setToken] = useState(getUser());
 
-  const saveToken = userToken => {
-    localStorage.setItem('token', JSON.stringify(userToken));
-    setToken(userToken.token);
+  const saveToken = useruser => {
+    localStorage.setItem('user', JSON.stringify(useruser));
+    setToken(useruser.user);
   };
 
   return {
     setToken: saveToken,
-    token
+    user
   }
 }

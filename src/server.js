@@ -12,24 +12,30 @@ app.use(bodyParser.json());
 
 app.use('/login', (req, res) => {
   console.log(req.body)
-  res.send({
-    token: 'test123'
-  });
-});
+  console.log(req.body.username)
+  console.log(req.body.password)
 
+  if(database.checkUserPassword(req.body.username,req.body.password)){  //user and password
+    res.send({
+      user: "lwgover"
+    });
+  }else{
 
-app.use(bodyParser.json());
-app.post('/SearchQuizzes', (req, res) => {
-  console.log("request recieved");
-  
-  let searchTerm = req.body;
-  let results = database.searchQuizNames(searchTerm);
-  
-  if (results === undefined) {
-    results = null;
   }
-  
-  res.json(results);
 });
+
+
+// app.post('/SearchQuizzes', (req, res) => {
+//   console.log("request recieved");
+  
+//   let searchTerm = req.body;
+//   let results = database.searchQuizNames(searchTerm);
+  
+//   if (results === undefined) {
+//     results = null;
+//   }
+  
+//   res.json(results);
+// });
 
 app.listen(8080, () => console.log('API is running on http://localhost:8080/login'));

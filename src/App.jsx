@@ -10,9 +10,9 @@ import SearchBar from "./QuizSearchPage/QuizSearchPage.jsx"
 import useToken from './useToken';
 
 export default function App(){
-    const { token, setToken } = useToken();
+    const { user, setToken } = useToken();
 
-    if(!token) {
+    if(!user) {
         return (
             <BrowserRouter>
             <Header/>
@@ -34,7 +34,7 @@ export default function App(){
           <Route path="/" element={<HomePage/>} />
           <Route path="/TakeQuizzesPage" element={<TakeQuizzesPage/>} />
           <Route path="/makeQuiz" element={<MakeQuiz/>} />
-          <Route path="/User" element={<User/>} />
+          <Route path="/User" element={<User username={user}/>} />
           <Route path="/SearchQuizzes" element={<SearchBar/>} />
         </Routes>
       </BrowserRouter>

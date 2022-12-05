@@ -1,6 +1,12 @@
 import {Link} from "react-router-dom"
+import Parser from 'html-react-parser';
 
-function UserPage() {
+function getUser(user){
+    console.log("class is " + typeof(user));
+    return user;
+}
+
+function UserPage({ username }) {
     const style = {
         margin: "auto",
         padding: "0% 5% 10% 5%",
@@ -9,7 +15,7 @@ function UserPage() {
 
     return <div style={style}>
         <div style={{"fontSize": "96px"}}>
-            THIS WILL BE YOUR USERNAME
+            {Parser(JSON.stringify(getUser(username)))}
         </div> 
         <UserStuff />
     </div>
