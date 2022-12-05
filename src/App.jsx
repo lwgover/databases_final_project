@@ -9,20 +9,22 @@ import Login from "./Login/Login"
 import SearchBar from "./QuizSearchPage/QuizSearchPage.jsx"
 import useToken from './useToken';
 
-function setToken(userToken) {
-    sessionStorage.setItem('token', JSON.stringify(userToken));
-  }
-  function getToken() {
-    const tokenString = sessionStorage.getItem('token');
-    const userToken = JSON.parse(tokenString);
-    return userToken?.token
-  }
-
 export default function App(){
     const { token, setToken } = useToken();
 
     if(!token) {
-        return <Login setToken={setToken} />
+        return (
+            <BrowserRouter>
+            <Header/>
+            <Routes>
+                <Route path="/" element={<HomePage/>} />
+                <Route path="/TakeQuizzesPage" element={<TakeQuizzesPage/>} />
+                <Route path="/makeQuiz" element={<Login setToken={setToken}/>} />
+                <Route path="/User" element={<Login setToken={setToken}/>} />
+                <Route path="/SearchQuizzes" element={<SearchBar/>} />
+            </Routes>
+            </BrowserRouter>
+        )
     }
 
     return (
@@ -34,7 +36,6 @@ export default function App(){
           <Route path="/makeQuiz" element={<MakeQuiz/>} />
           <Route path="/User" element={<User/>} />
           <Route path="/SearchQuizzes" element={<SearchBar/>} />
-          <Route path="/Login" element={<Login setToken={setToken}/>} />
         </Routes>
       </BrowserRouter>
     );
