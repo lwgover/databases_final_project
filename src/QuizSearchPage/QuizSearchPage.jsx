@@ -72,14 +72,14 @@ export class QuizSearchPage extends React.Component {
     queryDatabase(quizName) {
         console.log("query databse with " + quizName);
 
+        let searchTerm = {searchTerm: quizName};
+
         return fetch('http://localhost:8080/SearchQuizzes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                searchTerm: quizName
-            })
+            body: JSON.stringify(searchTerm)
         })
         .then((response) => response.json())
         .then((data) => {return data});

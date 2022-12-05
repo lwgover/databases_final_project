@@ -27,7 +27,7 @@ app.use('/login', (req, res) => {
 });
 
 
-app.all('/SearchQuizzes', (req, res) => {
+app.use('/SearchQuizzes', (req, res) => {
   console.log("request recieved");
 
   let searchTerm = req.body.searchTerm;
