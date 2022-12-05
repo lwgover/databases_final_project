@@ -19,14 +19,20 @@ function clickHandler() {
     let userInput = document.querySelector("#searchBox").value;
 
     let searchResults = database.searchResults(userInput);
-    
+
     let newHTML = "";
-    for (quiz in searchResults) {
-        newHTML += "<div class='quiz'>";
-        newHTML += "<span class='quizName'>" + quiz.quizName + "</span>";
-        newHTML += "<span class='author'> Author: " + quiz.author + "</author>";
-        newHTML += "<span class='datePosted'> Posted on: " + cleanDate(quiz.datePosted) + "</span>";
-        newHTML += "</div>";
+
+    if (searchResults.length === 0) {
+        newHTML = "<div>No quizzes by that name.</div>";
+    }
+    else {
+        for (quiz in searchResults) {
+            newHTML += "<div class='quiz'>";
+            newHTML += "<span class='quizName'>" + quiz.quizName + "</span>";
+            newHTML += "<span class='author'> Author: " + quiz.author + "</author>";
+            newHTML += "<span class='datePosted'> Posted on: " + cleanDate(quiz.datePosted) + "</span>";
+            newHTML += "</div>";
+        }
     }
 
     document.querySelector("#results").innerHTML = newHTML;
