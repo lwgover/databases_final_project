@@ -3,10 +3,6 @@ import { useState } from 'react';
 export default function useuser() {
   const getUser = () => {
     const userString = localStorage.getItem('user');
-    console.log(userString);
-    if(userString == 'undefined'){
-      console.log("hello Undefined");
-    }
     const useruser = JSON.parse(userString);
     //return 'user';
     console.log("?" + useruser?.user);
@@ -15,9 +11,9 @@ export default function useuser() {
 
   const [user, setToken] = useState(getUser());
 
-  const saveToken = useruser => {
-    localStorage.setItem('user', JSON.stringify(useruser));
-    setToken(useruser.user);
+  const saveToken = userLocal => {
+    localStorage.setItem('user', JSON.stringify(userLocal));
+    setToken(userLocal.user);
   };
 
   return {
