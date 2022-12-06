@@ -42,6 +42,20 @@ app.use('/TakeQuiz', (req, res) => {
   }
 });
 
+app.use('/MakeQuiz', (req, res) => {
+  console.log(req.body);
+  //console.log(req.body.username)
+  //console.log(req.body.password)
+
+  if(!true){
+    //res.send();
+  }else{
+    res.send({
+      status: "Quiz was recieved or whatever"
+    });
+  }
+});
+
 
 app.use('/SearchQuizzes', (req, res) => {
   console.log("request recieved");
