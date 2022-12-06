@@ -56,10 +56,20 @@ export default function TakeQuizzesPage({ setToken }) {
     console.log(quizFromStorage.quiz.name); // name
     console.log(quizFromStorage.quiz.datePosted); // date posted
     console.log(quizFromStorage.questions); // questions
-    return(
-      <div className="TakeQuizzesPage-wrapper">
-        <h1>You have a quiz ready! Refresh the page to begin!</h1>
-      </div>
-    )
+
+    if(quizFromStorage != null){
+      return (
+        <div className="TakeQuizzesPage-wrapper">
+          <h1>You have a quiz ready! Look in the console to see the quiz info</h1>
+        </div>
+      )
+
+    }else{
+      return(
+        <div className="TakeQuizzesPage-wrapper">
+          <h1>You have a quiz ready! Refresh the page to begin!</h1>
+        </div>
+      )
+    }
   }
 }
