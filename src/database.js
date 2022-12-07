@@ -23,7 +23,7 @@ db.pragma('journal_mode = WAL');
 //returns true on success, false on failure
 function addUser(username, hashedPassword) {
     if (!userExists(username)) {
-        let query = `INSERT INTO users VALUES(?, ?)`;
+        let query = 'INSERT INTO users VALUES(?, ?)';
         db.prepare(query).run(username, hashedPassword);
         return true;
     }
@@ -35,11 +35,11 @@ function addUser(username, hashedPassword) {
 //checks the password of a user
 //returns true if they match, or false if the username or password is incorrect
 function checkUserPassword(username, hashedPassword) {
-    if (!userExists) {
+    if (!userExists(username)) {
         return false;
     }
 
-    let query = `SELECT password FROM users WHERE Username = ?`;
+    let query = 'SELECT password FROM users WHERE username = ?';
     let r = db.prepare(query).get(username);
     //return true or false
     if (hashedPassword === r.password) {
@@ -64,8 +64,8 @@ function userExists(username) {
 
 //removes a user from the database
 function removeUser(username) {
-    if (userExists) {
-        let query = `DELETE * FROM users WHERE Username = ?`;
+    if (userExists(username)) {
+        let query = 'DELETE * FROM users WHERE Username = ?';
         db.prepare(query).run(username);
         return true;
     }
@@ -157,9 +157,12 @@ function checkQuizID(quizID) {
     return true;
 }
 
+
+//TODO: disallow "" as an input
+//TODO: change to an iterator, only 25 are allowed
 function searchQuizNames(quizName) {
-    let query = 'SELECT * FROM quizzes WHERE quizName LIKE ?';
-    let results = db.prepare(query).all("%" + quizName + "%");
+    let query = 'SELECT * FROM quizzes WHERE quizName LIKE (% || ? || %)';
+    let results = db.prepare(query).all(quizName );
     return results;
 } //EXPORTED
 

@@ -82,7 +82,6 @@ export class QuizSearchPage extends React.Component {
             body: JSON.stringify(searchTerm)
         })
         .then((response) => response.json())
-        .then((data) => {return data});
     }
 
 
