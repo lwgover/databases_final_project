@@ -12,7 +12,7 @@ const sqlite = require('better-sqlite3');
 
 //setup the database variable
 const path = require('path');
-const dbPath = path.resolve(__dirname, './database.db')
+const dbPath = path.resolve(__dirname, './../database.db')
 const db = new sqlite(dbPath); //EXPORTED
 db.pragma('journal_mode = WAL');
 
