@@ -60,7 +60,14 @@ app.use('/MakeQuiz', (req, res) => {
 app.use('/CreateUser', (req, res) => {
   console.log(req.body);
 
-  console.log(database.addUser(req.body.username,req.body.password));
+  if(database.addUser(req.body.username,req.body.password)){
+    console.log('worked!')
+    res.send({
+        user:req.body.username
+    });
+  }else{
+    console.log('failed');
+  }
 });
 
 

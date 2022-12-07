@@ -24,7 +24,7 @@ export default function App(){
                 <Route path="/makeQuiz" element={<Login setToken={setToken}/>} />
                 <Route path="/User" element={<Login setToken={setToken}/>} />
                 <Route path="/SearchQuizzes" element={<SearchBar/>} />
-                <Route path="/CreateUser" element={<CreateUser/>} />
+                <Route path="/CreateUser" element={<CreateUser setToken={setToken}/>} />
             </Routes>
             <Footer/>
             </BrowserRouter>
@@ -40,6 +40,7 @@ export default function App(){
           <Route path="/makeQuiz" element={<MakeQuiz user={user}/>} />
           <Route path="/User" element={<User username={user}/>} />
           <Route path="/SearchQuizzes" element={<SearchBar/>} />
+          <Route path="/CreateUser" element={<User username={user}/>} />
         </Routes>
         <Footer/>
       </BrowserRouter>

@@ -33,7 +33,7 @@ async function CreateUserUser(credentials) {
       }
  }
 
-export default function CreateUser() {
+export default function CreateUser({setToken}) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [password2, setPassword2] = useState();
@@ -42,11 +42,12 @@ export default function CreateUser() {
     if(password == password2){
         e.preventDefault();
         const token = await CreateUserUser({
-        username,
-        password
+            username,
+            password
         });
-        console.log(token)
+        console.log(token);
         setToken(token);
+        this.context.router.history.push('');
     }
   }
   return(
@@ -73,3 +74,6 @@ export default function CreateUser() {
     </div>
   )
 }
+CreateUser.propTypes = {
+    setToken: PropTypes.func.isRequired
+  }
