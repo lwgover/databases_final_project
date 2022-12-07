@@ -12,41 +12,64 @@ async function CreateUserUser(credentials) {
   })
     .then(data => data.json())
  }
+ function Matching({booleanMatch}){
+    const style = {
+        margin: "auto",
+        padding: "0% 5% 10% 5%",
+        color: "Red",
+        h1: {'text-align':'center'}
+      }
+      console.log('passwords are' + booleanMatch);
+      if(booleanMatch){
+        return (
+            <div>Those are some good passwords</div>
+        )
+      }else{
+        return (
+            <div>
+            <div style = {style}><h1>Passwords don't match</h1></div>
+            </div>
+        )
+      }
+ }
 
 export default function CreateUser() {
   const [username, setUserName] = useState();
-  const [password1, setPassword1] = useState();
+  const [password, setPassword] = useState();
   const [password2, setPassword2] = useState();
 
   const handleSubmit = async e => {
-    e.preventDefault();
-    const token = await CreateUserUser({
-      username,
-      password
-    });
-    console.log(token)
-    setToken(token);
+    if(password == password2){
+        e.preventDefault();
+        const token = await CreateUserUser({
+        username,
+        password
+        });
+        console.log(token)
+        setToken(token);
+    }
   }
   return(
     <div className="CreateUser-wrapper">
       <h1>Create User</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Username</p>
+          <p>username</p>
           <input type="text" onChange={e => setUserName(e.target.value)}/>
         </label>
         <label>
-          <p>Password</p>
-          <input type="password" onChange={e => setPassword1(e.target.value)}/>
+          <p>password</p>
+          <input type="password" onChange={e => setPassword(e.target.value)}/>
         </label>
         <label>
-          <p>Password</p>
+          <p>retype Password</p>
           <input type="password" onChange={e => setPassword2(e.target.value)}/>
         </label>
         <div>
           <button type="submit">Submit</button>
         </div>
       </form>
+      <Matching booleanMatch={(password == password2)}/>
     </div>
   )
 }

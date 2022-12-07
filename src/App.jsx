@@ -13,8 +13,8 @@ import useToken from './useToken';
 
 export default function App(){
     const { user, setToken } = useToken();
-
-    if(!user) {
+    console.log('app user: ' + user);
+    if(!user || user == 'Invalid User') {
         return (
             <BrowserRouter>
             <Header/>

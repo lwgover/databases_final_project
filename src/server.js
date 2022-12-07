@@ -57,6 +57,12 @@ app.use('/MakeQuiz', (req, res) => {
   }
 });
 
+app.use('/CreateUser', (req, res) => {
+  console.log(req.body);
+
+  console.log(database.addUser(req.body.username,req.body.password));
+});
+
 
 app.use('/SearchQuizzes', (req, res) => {
   console.log("request recieved");

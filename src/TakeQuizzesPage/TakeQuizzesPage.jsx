@@ -22,12 +22,16 @@ export default function TakeQuizzesPage() {
 
   const handleSubmit = async e => {
     //e.preventDefault();
-    const quizJSON = await GetQuiz({
-      qid
-    });
-    console.log(quizJSON.quiz);
-    localStorage.setItem('qid', JSON.stringify(qid));
-    localStorage.setItem('quiz', JSON.stringify(quizJSON));
+    if(JSON.stringify(qid).length >= 1){
+      const quizJSON = await GetQuiz({
+        qid
+      });
+      console.log(quizJSON.quiz);
+      if(JSON.stringify(quizJSON).length >= 1){ // change to whatever failing looks like
+        localStorage.setItem('qid', JSON.stringify(qid));
+        localStorage.setItem('quiz', JSON.stringify(quizJSON));
+      }
+    }
   }
 
   
@@ -73,4 +77,24 @@ export default function TakeQuizzesPage() {
       )
     }
   }
+  function Question(questionTitle) {
+
+    const style = {
+        margin: "auto",
+        padding: "10% 35% 10% 15%",
+        color: "black"
+    }
+
+    return <div style={style}>
+        <div style={{"fontSize": "48px"}}>
+            Lots of really useful user information
+        </div> 
+        <br />
+        <form onSubmit={localStorage.clear()}>
+        <div>
+          <button type="submit">log out</button>
+        </div>
+      </form>
+    </div>
+}
 }

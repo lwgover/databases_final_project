@@ -1,3 +1,7 @@
+.TakeQuizzesPage-wrapper {
+    background-color: rgb(21, 237, 244);
+    min-height:100vh;
+}
 .title{
     display:inline-block;
 }
