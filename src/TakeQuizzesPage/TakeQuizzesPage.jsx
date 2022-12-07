@@ -2,9 +2,6 @@ import React, {useState} from 'react';
 import './TakeQuizzesPage.css';
 import PropTypes from 'prop-types';
 
-function getLocalQuizID(){
-
-}
 
 async function GetQuiz(qid) {
   return fetch('http://localhost:8080/TakeQuiz', {
@@ -17,14 +14,14 @@ async function GetQuiz(qid) {
     .then(data => data.json())
  }
 
-export default function TakeQuizzesPage({ setToken }) {
+export default function TakeQuizzesPage() {
   const [qid, setQID] = useState();
   const qidString = localStorage.getItem('qid');
   const qidFromStorage = JSON.parse(qidString);
   console.log(qidFromStorage);
 
   const handleSubmit = async e => {
-    e.preventDefault();
+    //e.preventDefault();
     const quizJSON = await GetQuiz({
       qid
     });
@@ -56,6 +53,8 @@ export default function TakeQuizzesPage({ setToken }) {
     console.log(quizFromStorage.quiz.name); // name
     console.log(quizFromStorage.quiz.datePosted); // date posted
     console.log(quizFromStorage.questions); // questions
+
+    //Start making quiz here!
 
     if(quizFromStorage != null){
       return (

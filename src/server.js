@@ -21,7 +21,7 @@ app.use('/login', (req, res) => {
     });
   }else{
     res.send({
-      user: "invalid User"
+      user: "Invalid User"
     });
   }
 });
@@ -86,7 +86,7 @@ function submitQuizJSON(quiz){
     console.log(questions[i].question);
     console.log(questions[i].questionOrder);
     try{
-      database.addQuestion(quiz.quiz.username, quiz.quiz.quizName, quiz.quiz.datePosted, questions[i].questionOrder, questions[i].question);
+      console.log("success! " + database.addQuestion(quiz.quiz.username, quiz.quiz.quizName, quiz.quiz.datePosted, questions[i].questionOrder, questions[i].question));
     }catch(e) {
       return 'failed at addQuestion: ' + e;
     }
