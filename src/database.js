@@ -360,6 +360,7 @@ module.exports.addAnswer = addAnswer;
 module.exports.getAnswer = getAnswer;
 module.exports.getAnswersToOneQuestion = getAnswersToOneQuestion;
 module.exports.addAnswerByID = addAnswerByID;
+module.exports.idAddAnswer = idAddAnswer;
 
 module.exports.addAnswerValueByID = addAnswerValueByID;
 module.exports.getAnswerValues = getAnswerValues;
