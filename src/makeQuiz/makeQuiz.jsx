@@ -100,7 +100,7 @@ handleSubmit(event){
     for(var i=0;i<this.state.results;i++){
         var resultText = event.target.elements[i+1].value;
         var result = {quizID:quizID,result:resultText,description:"added before this existed :)"};
-        quizResults.push(event.target.elements[i+1].value);
+        quizResults.push(result);
     }
     for(var i = 0;i<this.state.count;i++){
         var qval = i*4*quizResults.length+i*4+i+quizResults.length+2;
