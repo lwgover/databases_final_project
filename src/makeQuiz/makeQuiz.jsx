@@ -129,11 +129,24 @@ handleSubmit(event){
     var quizObj = {quiz:quiz,questions:questions,answers:answers,quizResults:quizResults,answerValues:answerResults};
     var quizJSON = JSON.stringify(quizObj);
     localStorage.setItem('quiz', quizJSON);
+    console.log(quizJSON);
+    this.submitQuiz(quizJSON);
+    
     return(quizJSON);
 }
 cancelQuiz(){
 
 }
+async submitQuiz(quiz) {
+    return fetch('http://localhost:8080/makeQuiz', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: quiz
+    })
+      .then(data => data.json())
+   }
 deleteQuestion= ()=>{
     this.setState({
         count: this.state.count - 1
