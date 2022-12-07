@@ -33,7 +33,7 @@ export default function App(){
         <Routes>
           <Route path="/" element={<HomePage/>} />
           <Route path="/TakeQuizzesPage" element={<TakeQuizzesPage/>} />
-          <Route path="/makeQuiz" element={<MakeQuiz/>} />
+          <Route path="/makeQuiz" element={<MakeQuiz user={user}/>} />
           <Route path="/User" element={<User username={user}/>} />
           <Route path="/SearchQuizzes" element={<SearchBar/>} />
         </Routes>
