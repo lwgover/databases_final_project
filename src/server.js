@@ -15,7 +15,7 @@ app.use('/login', (req, res) => {
   console.log(req.body.username)
   console.log(req.body.password)
 
-  if(true){//database.checkUserPassword(req.body.user,req.body.password)){  //user and password
+  if(database.checkUserPassword(req.body.username,req.body.password)){  //user and password
     res.send({
       user: req.body.username
     });
