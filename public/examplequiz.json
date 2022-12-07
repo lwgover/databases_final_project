@@ -1,0 +1,225 @@
+{
+"quiz":{
+"quizID": "testquizID",
+"name": "example quiz",
+"username":"testUser",
+"datePosted":"testDate",
+"timesPlayed":0
+},
+"questions":[
+    {
+        "questionID":"testquestionID0",
+        "question":"test question 0",
+        "quizID":"testquizID",
+        "questionOrder":"0"
+    },
+    {
+        "questionID":"testquestionID1",
+        "question":"test question 1",
+        "quizID":"testquizID",
+        "questionOrder":"1"
+    },
+    {
+        "questionID":"testquestionID2",
+        "question":"test question 2",
+        "quizID":"testquizID",
+        "questionOrder":"2"
+    }
+],
+"answers":[
+{
+    "answerID":"testanswerIDA0Q0",
+    "answer":"question0answer0",
+    "questionID":"testquestionID0"
+},
+{
+    "answerID":"testanswerIDA1Q0",
+    "answer":"question0answer1",
+    "questionID":"testquestionID0"
+},
+{
+    "answerID":"testanswerIDA2Q0",
+    "answer":"question0answer2",
+    "questionID":"testquestionID0"
+},
+{
+    "answerID":"testanswerIDA3Q0",
+    "answer":"question0answer3",
+    "questionID":"testquestionID0"
+},
+{
+    "answerID":"testanswerIDA0Q1",
+    "answer":"question1answer0",
+    "questionID":"testquestionID1"
+},
+{
+    "answerID":"testanswerIDA1Q1",
+    "answer":"question1answer1",
+    "questionID":"testquestionID1"
+},
+{
+    "answerID":"testanswerIDA2Q1",
+    "answer":"question1answer2",
+    "questionID":"testquestionID1"
+},
+{
+    "answerID":"testanswerIDA3Q1",
+    "answer":"question1answer3",
+    "questionID":"testquestionID1"
+},
+{
+    "answerID":"testanswerIDA0Q2",
+    "answer":"question2answer0",
+    "questionID":"testquestionID2"
+},
+{
+    "answerID":"testanswerIDA1Q2",
+    "answer":"question2answer1",
+    "questionID":"testquestionID2"
+},
+{
+    "answerID":"testanswerIDA2Q2",
+    "answer":"question2answer2",
+    "questionID":"testquestionID2"
+},
+{
+    "answerID":"testanswerIDA3Q2",
+    "answer":"question2answer3",
+    "questionID":"testquestionID2"
+}
+],
+"quizResults":[
+{
+    "quizID":"testquizID",
+    "result":"result0",
+    "description":"description0"
+},
+{
+    "quizID":"testquizID",
+    "result":"result1",
+    "description":"description1"
+}
+],
+"answerValues":[
+{
+    "answerID": "testanswerIDA0Q0",
+    "result": "result0",
+    "value": "0"
+},
+{
+    "answerID": "testanswerIDA0Q0",
+    "result": "result1",
+    "value": "1"
+},
+{
+    "answerID": "testanswerIDA1Q0",
+    "result": "result0",
+    "value": "2"
+},
+{
+    "answerID": "testanswerIDA1Q0",
+    "result": "result1",
+    "value": "3"
+},
+{
+    "answerID": "testanswerIDA2Q0",
+    "result": "result0",
+    "value": "4"
+},
+{
+    "answerID": "testanswerIDA2Q0",
+    "result": "result1",
+    "value": "5"
+},
+{
+    "answerID": "testanswerIDA3Q0",
+    "result": "result0",
+    "value": "6"
+},
+{
+    "answerID": "testanswerIDA3Q0",
+    "result": "result1",
+    "value": "7"
+},
+{
+    "answerID": "testanswerIDA0Q1",
+    "result": "result0",
+    "value": "8"
+},
+{
+    "answerID": "testanswerIDA0Q1",
+    "result": "result1",
+    "value": "9"
+},
+{
+    "answerID": "testanswerIDA1Q1",
+    "result": "result0",
+    "value": "10"
+},
+{
+    "answerID": "testanswerIDA1Q1",
+    "result": "result1",
+    "value": "11"
+},
+{
+    "answerID": "testanswerIDA2Q1",
+    "result": "result0",
+    "value": "12"
+},
+{
+    "answerID": "testanswerIDA2Q1",
+    "result": "result1",
+    "value": "13"
+},
+{
+    "answerID": "testanswerIDA3Q1",
+    "result": "result0",
+    "value": "14"
+},
+{
+    "answerID": "testanswerIDA3Q1",
+    "result": "result1",
+    "value": "15"
+},
+{
+    "answerID": "testanswerIDA0Q2",
+    "result": "result0",
+    "value": "16"
+},
+{
+    "answerID": "testanswerIDA0Q2",
+    "result": "result1",
+    "value": "17"
+},
+{
+    "answerID": "testanswerIDA1Q2",
+    "result": "result0",
+    "value": "18"
+},
+{
+    "answerID": "testanswerIDA1Q2",
+    "result": "result1",
+    "value": "19"
+},
+{
+    "answerID": "testanswerIDA2Q2",
+    "result": "result0",
+    "value": "20"
+},
+{
+    "answerID": "testanswerIDA2Q2",
+    "result": "result1",
+    "value": "21"
+},
+{
+    "answerID": "testanswerIDA3Q2",
+    "result": "result0",
+    "value": "22"
+},
+{
+    "answerID": "testanswerIDA3Q2",
+    "result": "result1",
+    "value": "23"
+}
+]
+}
