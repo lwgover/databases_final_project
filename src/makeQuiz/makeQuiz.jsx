@@ -71,7 +71,6 @@ return resultRanges;
 handleSubmit(event){
     //NEED USERNAME
     var username = this.user;
-    event.preventDefault();
     var currentdate = new Date(); 
     var datePosted = (currentdate.getMonth()+1)  + "/" 
                 +   currentdate.getDate() + "/"
@@ -100,7 +99,7 @@ handleSubmit(event){
     for(var i=0;i<this.state.results;i++){
         var resultText = event.target.elements[i+1].value;
         var result = {quizID:quizID,result:resultText,description:"added before this existed :)"};
-        quizResults.push(event.target.elements[i+1].value);
+        quizResults.push(result);
     }
     for(var i = 0;i<this.state.count;i++){
         var qval = i*4*quizResults.length+i*4+i+quizResults.length+2;
@@ -129,11 +128,24 @@ handleSubmit(event){
     var quizObj = {quiz:quiz,questions:questions,answers:answers,quizResults:quizResults,answerValues:answerResults};
     var quizJSON = JSON.stringify(quizObj);
     localStorage.setItem('quiz', quizJSON);
+    console.log(quizJSON);
+    this.submitQuiz(quizJSON);
+    
     return(quizJSON);
 }
 cancelQuiz(){
 
 }
+async submitQuiz(quiz) {
+    return fetch('http://localhost:8080/makeQuiz', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: quiz
+    })
+      .then(data => data.json())
+   }
 deleteQuestion= ()=>{
     this.setState({
         count: this.state.count - 1
