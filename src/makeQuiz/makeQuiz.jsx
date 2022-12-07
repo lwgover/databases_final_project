@@ -126,6 +126,7 @@ handleSubmit(event){
     console.log(answerResults);
     var quizObj = {quiz:quiz,questions:questions,answers:answers,quizResults:quizResults,answerValues:answerResults};
     var quizJSON = JSON.stringify(quizObj);
+    localStorage.setItem('quiz', quizJSON);
     return(quizJSON);
 }
 cancelQuiz(){
