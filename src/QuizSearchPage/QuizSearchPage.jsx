@@ -55,6 +55,8 @@ export class QuizSearchPage extends React.Component {
         //let databaseSearch = database.searchQuizNames(this.state.value); //search the database
         let databaseSearch = await this.queryDatabase(this.state.value);
 
+        console.log(databaseSearch);
+
         if (databaseSearch === null) { //if the search didn't find anything,
             this.setState({searchResults: []}); //set the results to an empty array
         }
@@ -81,7 +83,7 @@ export class QuizSearchPage extends React.Component {
             },
             body: JSON.stringify(searchTerm)
         })
-        .then((response) => response.json())
+        .then(data => data.json())
     }
 
 
