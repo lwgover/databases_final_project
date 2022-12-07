@@ -4,9 +4,11 @@ import './makeQuiz.css';
 
 export class makeQuiz extends React.Component {
     
-    constructor(){
+    constructor(user){
         super();
         this.state={count:0,results:0};
+        this.user = user.user;
+        console.log("I'm getting: " + this.user);
     }
 render() {
     return( <div className="makeQuizWrapper">
@@ -68,7 +70,7 @@ return resultRanges;
 }
 handleSubmit(event){
     //NEED USERNAME
-    var username = null;
+    var username = this.user;
     event.preventDefault();
     var currentdate = new Date(); 
     var datePosted = (currentdate.getMonth()+1)  + "/" 
@@ -126,6 +128,7 @@ handleSubmit(event){
     console.log(answerResults);
     var quizObj = {quiz:quiz,questions:questions,answers:answers,quizResults:quizResults,answerValues:answerResults};
     var quizJSON = JSON.stringify(quizObj);
+    localStorage.setItem('quiz', quizJSON);
     return(quizJSON);
 }
 cancelQuiz(){

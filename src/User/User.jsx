@@ -30,6 +30,11 @@ function UserStuff() {
             Lots of really useful user information
         </div> 
         <br />
+        <form onSubmit={localStorage.clear()}>
+        <div>
+          <button type="submit">log out</button>
+        </div>
+      </form>
     </div>
 }
 
