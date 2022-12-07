@@ -26,19 +26,19 @@ export class QuizSearchPage extends React.Component {
         }
 
         let results = [];
-        for (let i = 0; i < searchResults.length; i++) {
+        for (let i = 0; i < this.state.searchResults.length; i++) {
             let oneResult = (<div className="quizDiv"> 
                 <span className="quizName"> 
-                    {searchResults[i].quizName} 
+                    {this.state.searchResults[i].quizName} 
                 </span>
                 <span className="author">
-                    Author: {searchResults[i].username};
+                    Author: {this.state.searchResults[i].username};
                 </span>
                 <span className="datePosted">
-                    Posted on: {searchResults[i].datePosted};
+                    Posted on: {this.state.searchResults[i].datePosted};
                 </span>
                 <span className="timesPlayed">
-                    Times played: {searchResults[i].timesPlayed}
+                    Times played: {this.state.searchResults[i].timesPlayed}
                 </span>
             </div>);
             results.push(oneResult);
