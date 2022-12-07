@@ -51,7 +51,9 @@ export class QuizSearchPage extends React.Component {
     //does the actual searching
     async handleSubmit(event) {
         event.preventDefault();
-        console.log("handling submit button");
+        if (this.state.value === "") {
+            return;
+        }
         this.setState({hasSearched: true}); //mark that the user has searched at least once since the page loaded
         
         //let databaseSearch = database.searchQuizNames(this.state.value); //search the database
