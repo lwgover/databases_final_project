@@ -16,9 +16,9 @@ async function GetQuiz(qid) {
 
 export default function TakeQuizzesPage() {
   const [qid, setQID] = useState();
-  const qidString = localStorage.getItem('qid');
-  const qidFromStorage = JSON.parse(qidString);
-  console.log(qidFromStorage);
+  const quizString = localStorage.getItem('quiz');
+  const quizFromStorage = JSON.parse(quizString);
+  console.log(quizFromStorage);
 
   const handleSubmit = async e => {
     //e.preventDefault();
@@ -28,7 +28,6 @@ export default function TakeQuizzesPage() {
       });
       console.log(quizJSON.quiz);
       if(JSON.stringify(quizJSON).length >= 1){ // change to whatever failing looks like
-        localStorage.setItem('qid', JSON.stringify(qid));
         localStorage.setItem('quiz', JSON.stringify(quizJSON));
       }
     }
@@ -36,7 +35,7 @@ export default function TakeQuizzesPage() {
 
   
   //const quiz = handleSubmit(e);
-  if(qidFromStorage == null){
+  if(quizFromStorage == null){
     return(
       <div className="TakeQuizzesPage-wrapper">
       <h1>It's quiz time!</h1>
@@ -52,8 +51,6 @@ export default function TakeQuizzesPage() {
       </div>
     )
   }else{
-    const quizString = localStorage.getItem('quiz');
-    const quizFromStorage = JSON.parse(quizString);
     console.log(quizFromStorage.quiz.name); // name
     console.log(quizFromStorage.quiz.datePosted); // date posted
     console.log(quizFromStorage.questions); // questions
