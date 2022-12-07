@@ -161,8 +161,8 @@ function checkQuizID(quizID) {
 //TODO: disallow "" as an input
 //TODO: change to an iterator, only 25 are allowed
 function searchQuizNames(quizName) {
-    let query = 'SELECT * FROM quizzes WHERE quizName LIKE (% || ? || %)';
-    let results = db.prepare(query).all(quizName );
+    let query = 'SELECT * FROM quizzes WHERE quizName LIKE ?';
+    let results = db.prepare(query).all('%' + quizName + '%');
     return results;
 } //EXPORTED
 

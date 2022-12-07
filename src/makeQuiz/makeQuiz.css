@@ -4,3 +4,34 @@
 .inline-btn{
     display:inline-block;
 }
+#makeQuizWrapper{
+    background-color:rgb(255,131,98);
+    min-height:100vh;
+}
+.question{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding:5vh;
+}
+.answer{
+    justify-content: center;
+    text-align: center;
+    margin:auto;
+    display: table-cell;
+}
+.answers{
+    width:100%;
+    display: table;
+    table-layout: fixed;
+}
+
+.result{
+    justify-content: center;
+    text-align: center;
+    margin:auto;
+    display:flexbox;
+    padding:5px;
+}
