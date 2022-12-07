@@ -59,7 +59,9 @@ export default function TakeQuizzesPage() {
     if(quizFromStorage != null){
       return (
         <div className="TakeQuizzesPage-wrapper">
-          <h1>You have a quiz ready! Look in the console to see the quiz info</h1>
+          <h1>{quizFromStorage.quiz.name}</h1>
+          <h2>{quizFromStorage.quiz.datePosted}</h2>
+          <body>{JSON.stringify(quizFromStorage)}</body>
         </div>
       )
 

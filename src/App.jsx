@@ -7,6 +7,7 @@ import MakeQuiz from "./makeQuiz/makeQuiz"
 import User from "./User/User"
 import Login from "./Login/Login"
 import SearchBar from "./QuizSearchPage/QuizSearchPage.jsx"
+import CreateUser from "./CreateUser/CreateUser.jsx"
 import useToken from './useToken';
 
 export default function App(){
@@ -22,6 +23,7 @@ export default function App(){
                 <Route path="/makeQuiz" element={<Login setToken={setToken}/>} />
                 <Route path="/User" element={<Login setToken={setToken}/>} />
                 <Route path="/SearchQuizzes" element={<SearchBar/>} />
+                <Route path="/CreateUser" element={<CreateUser/>} />
             </Routes>
             </BrowserRouter>
         )

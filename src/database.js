@@ -246,9 +246,9 @@ function addAnswer(username, quizName, datePosted, questionNumber, answer, answe
     return true;
 } //EXPORTED
 
-function addAnswerByID(questionID, answer, answerNumber) {
+function addAnswerByID(questionID1, answer, answerNumber) {
     let introQuery = "SELECT * FROM answers WHERE questionID = ?";
-    let questionID = db.prepare(introQuery).get(questionID);
+    let questionID = db.prepare(introQuery).get(questionID1);
     if (questionID === undefined) {
         return false;
     }
