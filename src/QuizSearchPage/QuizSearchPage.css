@@ -1,0 +1,25 @@
+#searchQuizzes {
+    background-color: rgb(217,180,255);
+    min-height:100vh;
+}
+
+.quizDiv {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+
+    background-color: rgb(204,255,204);
+    padding: 4px;
+    border: 3px solid white;
+    margin:8px;
+
+    font-size: 18px;
+}
+
+.quizName {
+    font-weight: bold;
+}
+
+#searchBar {
+    padding: 5px;
+    margin: 5px;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import { index } from "./../index";
+import './QuizSearchPage.css';
 
 export class QuizSearchPage extends React.Component {
     constructor(){
@@ -27,20 +28,21 @@ export class QuizSearchPage extends React.Component {
 
         let results = [];
         for (let i = 0; i < this.state.searchResults.length; i++) {
-            let oneResult = (<div className="quizDiv"> 
-                <span className="quizName"> 
-                    {this.state.searchResults[i].quizName} 
-                </span>
-                <span className="author">
-                    Author: {this.state.searchResults[i].username};
-                </span>
-                <span className="datePosted">
-                    Posted on: {this.state.searchResults[i].datePosted};
-                </span>
-                <span className="timesPlayed">
-                    Times played: {this.state.searchResults[i].timesPlayed}
-                </span>
-            </div>);
+            let oneResult = (
+                <div className="quizDiv"> 
+                    <span className="quizName"> 
+                        {this.state.searchResults[i].quizName} 
+                    </span>
+                    <span className="author">
+                        Author: {this.state.searchResults[i].username};
+                    </span>
+                    <span className="datePosted">
+                        Posted on: {this.state.searchResults[i].datePosted};
+                    </span>
+                    <span className="timesPlayed">
+                        Times played: {this.state.searchResults[i].timesPlayed}
+                    </span>
+                </div>);
             results.push(oneResult);
         }
         return results;
@@ -89,18 +91,19 @@ export class QuizSearchPage extends React.Component {
 
 
     render() {
-        return (<div id="searchQuizzes">
-            <h1> Search all quizzes! </h1>
-            <span>
-                <form onSubmit={this.handleSubmit}>
-                    <input type="text" value={this.state.value} onChange={this.handleChange}></input>
-                    <input type="submit" value="Submit"></input>
-                </form>
-            </span>
-            <div id="results">
-                {this.displaySearchResults()}
-            </div>
-        </div>)
+        return (
+            <div id="searchQuizzes">
+                <h1> Search all quizzes! </h1>
+                <div id="searchBar">
+                    <form onSubmit={this.handleSubmit}>
+                        <input type="text" value={this.state.value} onChange={this.handleChange}></input>
+                        <input type="submit" value="Submit"></input>
+                    </form>
+                </div>
+                <div id="results">
+                    {this.displaySearchResults()}
+                </div>
+            </div>)
     }
 
 }
