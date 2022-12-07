@@ -11,11 +11,11 @@ export class makeQuiz extends React.Component {
         console.log("I'm getting: " + this.user);
     }
 render() {
-    return( <div className="makeQuizWrapper">
+    return( <div id="makeQuizWrapper">
         <h1>Create your quiz!</h1>
         <form onSubmit = {this.handleSubmit.bind(this)}>
        <p className="title">Quiz Name</p><input type = "text" name ="quizName"></input>
-        <div name = "results">
+        <div className = "results">
             {this.getResults()}
         </div>
         <button type ="button"  onClick = {this.addResult}>Create new result</button>
@@ -39,10 +39,10 @@ getQuestions(){
     for(var i=0;i<this.state.count;i++){
         var answers =[];
         for(var j = 0; j<4; j++){
-            var answer = <div className = "answer title"  name={"q"+i+"a" + answers.length}> <p className = "title">Answer {j+1}</p><input type = "text" className = "inline-btn"></input> <div id="resultRanges">{this.applyResultsToAnswer(i,j)}</div></div>
+            var answer = <div className = "answer title"> <p >Answer {j+1}</p><input type = "text" ></input> <div id="resultRanges">{this.applyResultsToAnswer(i,j)}</div></div>
             answers.push(answer)
         }
-        var question =<div className = "question title" name={"q" + i}> <p className = "title">Question {i+1}</p><input type = "text" className = "inline-btn"></input> <div className = "answers">{answers}</div></div>
+        var question =<div className = "questionWrapper"><div className = "question"> <p className = "title">Question {i+1}</p><input type = "text" className = "inline-btn"></input></div>  <div className = "answers">{answers}</div></div>
         questionList.push(question);
     }
 return questionList;
@@ -50,7 +50,7 @@ return questionList;
 getResults(){
 var resultsList = [];
 for(var i=0;i<this.state.results;i++){
-    var result = <div className = "result title"> <p className = "title">Result {i+1}</p><input type = "text" className = "result" name={"r" + i}></input></div>
+    var result = <div className = "result title"> <p>Result {i+1}</p><input type = "text" className = "result" name={"r" + i}></input></div>
     resultsList.push(result);
 }
 return resultsList;
