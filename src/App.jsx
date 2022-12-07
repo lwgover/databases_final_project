@@ -8,6 +8,7 @@ import User from "./User/User"
 import Login from "./Login/Login"
 import SearchBar from "./QuizSearchPage/QuizSearchPage.jsx"
 import CreateUser from "./CreateUser/CreateUser.jsx"
+import Footer from "./common/Footer.jsx"
 import useToken from './useToken';
 
 export default function App(){
@@ -25,6 +26,7 @@ export default function App(){
                 <Route path="/SearchQuizzes" element={<SearchBar/>} />
                 <Route path="/CreateUser" element={<CreateUser/>} />
             </Routes>
+            <Footer/>
             </BrowserRouter>
         )
     }
@@ -39,6 +41,7 @@ export default function App(){
           <Route path="/User" element={<User username={user}/>} />
           <Route path="/SearchQuizzes" element={<SearchBar/>} />
         </Routes>
+        <Footer/>
       </BrowserRouter>
     );
 }
