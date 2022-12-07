@@ -71,7 +71,6 @@ return resultRanges;
 handleSubmit(event){
     //NEED USERNAME
     var username = this.user;
-    event.preventDefault();
     var currentdate = new Date(); 
     var datePosted = (currentdate.getMonth()+1)  + "/" 
                 +   currentdate.getDate() + "/"
