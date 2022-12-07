@@ -157,13 +157,22 @@ function checkQuizID(quizID) {
     return true;
 }
 
-
 //TODO: disallow "" as an input
 //TODO: change to an iterator, only 25 are allowed
 function searchQuizNames(quizName) {
     let query = 'SELECT * FROM quizzes WHERE quizName LIKE ?';
     let results = db.prepare(query).all('%' + quizName + '%');
     return results;
+} //EXPORTED
+
+function idAddQuiz(quizID, quizName, username, datePosted, timesPlayed) {
+    if(!checkQuizID(quizID)) {
+        return false;
+    }
+    //add the quiz to the database
+    let query = "INSERT INTO quizzes VALUES(?, ?, ?, ?, ?)";
+    db.prepare(query).run(quizID, quizName, username, datePosted, timesPlayed);
+    return true;
 } //EXPORTED
 
 
@@ -195,7 +204,7 @@ function addQuestionByID(quizID, question, questionNumber) {
     }
 
     //generate the questionID
-    let qustionID = quizID + "." + questionNumber;
+    let questionID = quizID + "." + questionNumber;
 
     //insert the question, now that we have the quizID
     let query = "INSERT INTO questions VALUES(?, ?, ?, ?)";
@@ -211,14 +220,18 @@ function getQuestionID(username, quizName, datePosted, questionNumber) {
     let query = "SELECT questionID FROM questions WHERE quizID = ? AND questionOrder = ?";
     let questionID = db.prepare(query).get(quizID, questionNumber);
     return questionID;
-}
+} //EXPORTED
 
-
+function idAddQuestion(questionID, question, quizID, questionOrder) {
+    //insert the question, now that we have the quizID
+    let query = "INSERT INTO questions VALUES(?, ?, ?, ?)";
+    db.prepare(query).run(questionID, question, quizID, questionOrder);
+} //EXPORTED
 
 
 ////////// ANSWERS /////////
 //adds an answer to the quiz. Returns false if the question doesn't exist and the add failed, true otherwise
-function addAnswer(username, quizName, datePosted, questionNumber, answer) {
+function addAnswer(username, quizName, datePosted, questionNumber, answer, answerNumber) {
     //get the questionID
     let questionID = getQuestionID(username, quizName, questionNumber, datePosted);
     if (questionID === undefined) {
@@ -226,17 +239,23 @@ function addAnswer(username, quizName, datePosted, questionNumber, answer) {
     }
 
     //generate a unique answer ID
-    let isUnique = false;
-    let answerID = questionID + ".";
-    let i = 0;
-    while (!isUnique) {
-        i++;
-        if (checkAnswerID(answerID + i)) {
-            answerID = answerID + i;
-            isUnique = true;
-        }
-    }
+    let answerID = questionID + "." + answerNumber;
     
+    let query = "INSERT INTO answers VALUES(?, ?, ?)";
+    db.prepare(query).run(answerID, answer, questionID);
+    return true;
+} //EXPORTED
+
+function addAnswerByID(questionID, answer, answerNumber) {
+    let introQuery = "SELECT * FROM answers WHERE questionID = ?";
+    let questionID = db.prepare(introQuery).get(questionID);
+    if (questionID === undefined) {
+        return false;
+    }
+
+    //generate a unique answer ID
+    let answerID = questionID + "." + answerNumber;
+
     let query = "INSERT INTO answers VALUES(?, ?, ?)";
     db.prepare(query).run(answerID, answer, questionID);
     return true;
@@ -249,9 +268,11 @@ function getAnswersToOneQuestion(questionID) {
     return results;
 } //EXPORTED
 
-function getAnswer(questionID, answer) {
+function getAnswer(questionID, answerNumber) {
+    let answerID = questionID + "." + answerNumber;
     let query = "SELECT * FROM answers WHERE questionID = ? AND answer = ?";
     let results = db.prepare(query).all(questionID, answer);
+    return results;
 } //EXPORTED
 
 function answerExists(answerID) {
@@ -265,6 +286,11 @@ function answerExists(answerID) {
         return true;
     }
 }
+
+function idAddAnswer(answerID, answer, questionID) {
+    let query = "INSERT INTO answers VALUES(?, ?, ?)";
+    db.prepare(query).run(answerID, answer, questionID);
+} //EXPORTED
 
 
 
@@ -323,13 +349,17 @@ module.exports.getQuizID = getQuizID;
 module.exports.deleteQuiz = deleteQuiz;
 module.exports.quizExists = quizExists;
 module.exports.searchQuizNames = searchQuizNames;
+module.exports.idAddQuiz = idAddQuiz;
 
 module.exports.addQuestion = addQuestion;
 module.exports.addQuestionByID = addQuestionByID;
+module.exports.getQuestionID = getQuestionID;
+module.exports.idAddQuestion = idAddQuestion;
 
 module.exports.addAnswer = addAnswer;
 module.exports.getAnswer = getAnswer;
 module.exports.getAnswersToOneQuestion = getAnswersToOneQuestion;
+module.exports.addAnswerByID = addAnswerByID;
 
 module.exports.addAnswerValueByID = addAnswerValueByID;
 module.exports.getAnswerValues = getAnswerValues;
