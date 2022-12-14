@@ -1,6 +1,7 @@
 import React from "react";
 import { index } from "./../index";
 import './QuizSearchPage.css';
+import {Link} from "react-router-dom"
 
 export class QuizSearchPage extends React.Component {
     constructor(){
@@ -42,6 +43,11 @@ export class QuizSearchPage extends React.Component {
                     <span className="timesPlayed">
                         Times played: {this.state.searchResults[i].timesPlayed}
                     </span>
+                    <Link to="/TakeQuizzesPage" class="nav-link">
+                        <button type="button" onClick={localStorage.setItem('qid',this.state.searchResults[i].quizName)}>
+                            Take Quiz
+                        </button>
+                    </Link>
                 </div>);
             results.push(oneResult);
         }
