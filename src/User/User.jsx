@@ -18,14 +18,19 @@ function UserPage({ username }) {
 
 function UserStuff({ username }) {
 
+    var wantsToLogOut = false;
+
     const style = {
         margin: "auto",
         padding: "10% 35% 10% 15%",
         color: "black"
     }
+    if(wantsToLogOut){
+        return 
+    }
 
     return <div style={style}>
-        <form onSubmit={localStorage.clear()}>
+        <form onSubmit={}>
             <div>
                 <button type="submit">log out</button>
             </div>
