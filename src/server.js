@@ -44,8 +44,7 @@ app.use('/TakeQuiz', (req, res) => {
 
 app.use('/MakeQuiz', (req, res) => {
   //try{
-  console.log(req.body);
-  submitQuizJSON(req.body);
+  console.log(submitQuizJSON(req.body));
   //}
 
   if(!true){
@@ -89,29 +88,24 @@ app.listen(8080, () => console.log('API is running on http://localhost:8080/'));
 function submitQuizJSON(quiz){
   console.log("in!")
   console.log(quiz);
-  try{
-    database.addQuiz(quiz.quiz.username,quiz.quiz.name,quiz.quiz.datePosted);
-  }catch(e) {
-    return 'failed at addQuiz: ' + e;
+  
+  if(!database.idAddQuiz(quiz.quiz.quizID,quiz.quiz.name,quiz.quiz.username,quiz.quiz.datePosted,0)){// uninvert later
+    return 'failed at addQuiz: ' + quiz.quiz.username;
   }
   questions = JSON.parse(JSON.stringify(quiz.questions));
   for(i in questions){
     console.log(questions[i].question);
     console.log(questions[i].questionOrder);
-    try{
-      console.log("success! " + database.addQuestion(quiz.quiz.username, quiz.quiz.quizName, quiz.quiz.datePosted, questions[i].questionOrder, questions[i].question));
-    }catch(e) {
-      return 'failed at addQuestion: ' + e;
+    if(!database.idAddQuestion(questions[i].questionID, questions[i].question,quiz.quiz.quizID,questions[i].questionOrder)){ 
+      return 'failed at addQuestion: ' + i;
     }
   }
   answers = JSON.parse(JSON.stringify(quiz.answers));
   for(i in answers){
     console.log(answers[i].answer);
     console.log(answers[i].questionID);
-    try{
-      //database.addAnswer(quiz.quiz.username, quiz.quiz.quizName, quiz.quiz.datePosted, answers[i].questionID, answers[i].answer);
-    }catch(e) {
-      return 'failed at addAnswer: ' + e;
+    if(!database.idAddAnswer(answers[i].answerID, answers[i].answer, answers[i].questionID )){
+      return 'failed at addAnswer: ' + answers[i].questionID;
     }
   }
   quizResults = JSON.parse(JSON.stringify(quiz.quizResults));
@@ -119,10 +113,8 @@ function submitQuizJSON(quiz){
     console.log(quizResults[i].quizID);
     console.log(quizResults[i].result);
     console.log(quizResults[i].description);
-    try{
-      database.addAnswer(quiz.quiz.username, quiz.quiz.quizName, quiz.quiz.datePosted, answers[i].answerOrder, answers[i].answer);
-    }catch(e) {
-      return 'failed at addAnswer: ' + e;
+    if(!database.addQuizResult(quiz.quiz.quizID, quizResults[i].result, quizResults[i].result)){
+      return 'failed at addAnswer: ' + answers[i].answerOrder;
     }
   }
   answerValues = JSON.parse(JSON.stringify(quiz.answerValues));

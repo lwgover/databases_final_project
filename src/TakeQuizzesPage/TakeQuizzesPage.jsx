@@ -15,7 +15,7 @@ async function GetQuiz(qid) {
  }
 
 export default function TakeQuizzesPage() {
-  const [qid, setQID] = useState();
+  const qid = localStorage.getItem('qid')
   const quizString = localStorage.getItem('quiz');
   const quizFromStorage = JSON.parse(quizString);
   console.log(quizFromStorage);
@@ -32,6 +32,7 @@ export default function TakeQuizzesPage() {
       }
     }
   }
+  handleSubmit();
 
   
   //const quiz = handleSubmit(e);
@@ -62,7 +63,7 @@ export default function TakeQuizzesPage() {
         <div className="TakeQuizzesPage-wrapper">
           <h1>{quizFromStorage.quiz.name}</h1>
           <h2>{quizFromStorage.quiz.datePosted}</h2>
-          <body>{JSON.stringify(quizFromStorage)}</body>
+          <h5>{JSON.stringify(quizFromStorage)}</h5>
         </div>
       )
 

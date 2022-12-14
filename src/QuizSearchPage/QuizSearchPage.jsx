@@ -30,7 +30,7 @@ export class QuizSearchPage extends React.Component {
         let results = [];
         for (let i = 0; i < this.state.searchResults.length; i++) {
             let oneResult = (
-                <div className="quizDiv"> 
+                <div className="quizDiv" key={this.state.searchResults[i].quizID}> 
                     <span className="quizName"> 
                         {this.state.searchResults[i].quizName} 
                     </span>

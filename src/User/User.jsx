@@ -15,22 +15,23 @@ function UserPage({ username }) {
         <UserStuff />
     </div>
 }
+ async function handleSubmit(event) {
+    console.log("hello");
+    event.preventDefault();
+    localStorage.clear();
+    location.reload(false);
+}
 
 function UserStuff({ username }) {
-
-    var wantsToLogOut = false;
 
     const style = {
         margin: "auto",
         padding: "10% 35% 10% 15%",
         color: "black"
     }
-    if(wantsToLogOut){
-        return 
-    }
 
     return <div style={style}>
-        <form onSubmit={}>
+        <form onSubmit={handleSubmit}>
             <div>
                 <button type="submit">log out</button>
             </div>
