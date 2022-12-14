@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './Login.css';
 import PropTypes from 'prop-types';
+import {Link} from "react-router-dom"
 
 import './Login.css';
 
@@ -12,10 +13,9 @@ async function loginUser(credentials) {
     },
     body: JSON.stringify(credentials)
   })
-  .then(data => data.json())
-}
-
-export default function Login({ setToken }) {
+    .then(data => data.json())
+ }
+ function Login_box({setToken}){
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
@@ -25,26 +25,59 @@ export default function Login({ setToken }) {
       username,
       password
     });
-    console.log(token)
+    console.log(JSON.stringify(token));
+    if((JSON.stringify(token) == '{"user":"Invalid User"}')){
+      localStorage.setItem('loginFailed','true')
+    }
     setToken(token);
   }
-  return(
-    <div className="login-wrapper">
-      <h1>Please Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <p>Username</p>
-          <input type="text" onChange={e => setUserName(e.target.value)}/>
-        </label>
-        <label>
-          <p>Password</p>
-          <input type="password" onChange={e => setPassword(e.target.value)}/>
-        </label>
-        <div>
-          <button type="submit">Submit</button>
+  return (
+    <div class='login-page'>
+      <div class="container">
+        <div className="login">
+          <h1>Please Log In</h1>
+          <form onSubmit={handleSubmit} method="post" action="">
+            <label>
+              <p>Username</p>
+              <p><input type="text" name="login"  placeholder="Username or Email" onChange={e => setUserName(e.target.value)}/></p>
+            </label>
+            <label>
+              <p>Password</p>
+              <p><input type="password" name="password"placeholder="Password" onChange={e => setPassword(e.target.value)}/></p>
+            </label>
+            <div>
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                  <Link to="/CreateUser" class="nav-link">Create New Account</Link>
+              </li>
+            </ul>
+            <p class="submit"><button type="submit" name="commit" value="Login" >Submit</button></p>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
+  )
+ }
+
+export default function Login({ setToken }) {
+  console.log(JSON.parse(localStorage.getItem('loginFailed')))
+  if(JSON.parse(localStorage.getItem('loginFailed'))){
+    const style = {
+      margin: "auto",
+      padding: "0% 5% 10% 5%",
+      color: "Red",
+      h1: {'text-align':'center'}
+    }
+    return (
+      <div>
+        <Login_box setToken={setToken}/>
+        <div style = {style}><h1>Login failed, try again</h1></div>
+      </div>
+    )
+  }
+  return(
+    <div><Login_box setToken={setToken}/></div>
   )
 }
 

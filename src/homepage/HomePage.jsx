@@ -20,7 +20,7 @@ function LandingFrameMessage() {
 
     return <div style={style}>
         <div style={{"fontSize": "96px"}}>
-            Nostalgic Quiz Website
+            Quiz Website
         </div> 
         <div style={{"fontSize": "36px"}}>
             Take quizzes and stuff!

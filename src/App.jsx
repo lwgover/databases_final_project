@@ -7,12 +7,14 @@ import MakeQuiz from "./makeQuiz/makeQuiz"
 import User from "./User/User"
 import Login from "./Login/Login"
 import SearchBar from "./QuizSearchPage/QuizSearchPage.jsx"
+import CreateUser from "./CreateUser/CreateUser.jsx"
+import Footer from "./common/Footer.jsx"
 import useToken from './useToken';
 
 export default function App(){
     const { user, setToken } = useToken();
-
-    if(!user) {
+    console.log('app user: ' + user);
+    if(!user || user == 'Invalid User') {
         return (
             <BrowserRouter>
             <Header/>
@@ -22,7 +24,9 @@ export default function App(){
                 <Route path="/makeQuiz" element={<Login setToken={setToken}/>} />
                 <Route path="/User" element={<Login setToken={setToken}/>} />
                 <Route path="/SearchQuizzes" element={<SearchBar/>} />
+                <Route path="/CreateUser" element={<CreateUser setToken={setToken}/>} />
             </Routes>
+            <Footer/>
             </BrowserRouter>
         )
     }
@@ -36,7 +40,9 @@ export default function App(){
           <Route path="/makeQuiz" element={<MakeQuiz user={user}/>} />
           <Route path="/User" element={<User username={user}/>} />
           <Route path="/SearchQuizzes" element={<SearchBar/>} />
+          <Route path="/CreateUser" element={<User username={user}/>} />
         </Routes>
+        <Footer/>
       </BrowserRouter>
     );
 }

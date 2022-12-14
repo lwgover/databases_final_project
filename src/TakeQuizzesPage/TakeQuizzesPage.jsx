@@ -16,23 +16,26 @@ async function GetQuiz(qid) {
 
 export default function TakeQuizzesPage() {
   const [qid, setQID] = useState();
-  const qidString = localStorage.getItem('qid');
-  const qidFromStorage = JSON.parse(qidString);
-  console.log(qidFromStorage);
+  const quizString = localStorage.getItem('quiz');
+  const quizFromStorage = JSON.parse(quizString);
+  console.log(quizFromStorage);
 
   const handleSubmit = async e => {
     //e.preventDefault();
-    const quizJSON = await GetQuiz({
-      qid
-    });
-    console.log(quizJSON.quiz);
-    localStorage.setItem('qid', JSON.stringify(qid));
-    localStorage.setItem('quiz', JSON.stringify(quizJSON));
+    if(JSON.stringify(qid).length >= 1){
+      const quizJSON = await GetQuiz({
+        qid
+      });
+      console.log(quizJSON.quiz);
+      if(JSON.stringify(quizJSON).length >= 1){ // change to whatever failing looks like
+        localStorage.setItem('quiz', JSON.stringify(quizJSON));
+      }
+    }
   }
 
   
   //const quiz = handleSubmit(e);
-  if(qidFromStorage == null){
+  if(quizFromStorage == null){
     return(
       <div className="TakeQuizzesPage-wrapper">
       <h1>It's quiz time!</h1>
@@ -48,8 +51,6 @@ export default function TakeQuizzesPage() {
       </div>
     )
   }else{
-    const quizString = localStorage.getItem('quiz');
-    const quizFromStorage = JSON.parse(quizString);
     console.log(quizFromStorage.quiz.name); // name
     console.log(quizFromStorage.quiz.datePosted); // date posted
     console.log(quizFromStorage.questions); // questions
@@ -59,7 +60,9 @@ export default function TakeQuizzesPage() {
     if(quizFromStorage != null){
       return (
         <div className="TakeQuizzesPage-wrapper">
-          <h1>You have a quiz ready! Look in the console to see the quiz info</h1>
+          <h1>{quizFromStorage.quiz.name}</h1>
+          <h2>{quizFromStorage.quiz.datePosted}</h2>
+          <body>{JSON.stringify(quizFromStorage)}</body>
         </div>
       )
 
@@ -71,4 +74,24 @@ export default function TakeQuizzesPage() {
       )
     }
   }
+  function Question(questionTitle) {
+
+    const style = {
+        margin: "auto",
+        padding: "10% 35% 10% 15%",
+        color: "black"
+    }
+
+    return <div style={style}>
+        <div style={{"fontSize": "48px"}}>
+            Lots of really useful user information
+        </div> 
+        <br />
+        <form onSubmit={localStorage.clear()}>
+        <div>
+          <button type="submit">log out</button>
+        </div>
+      </form>
+    </div>
+}
 }

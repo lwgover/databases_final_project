@@ -69,7 +69,8 @@ for(var i=0;i<this.state.results;i++){
 return resultRanges;
 }
 handleSubmit(event){
-    //NEED USERNAME
+    console.log('handling submit!');
+    event.preventDefault();
     var username = this.user;
     var currentdate = new Date(); 
     var datePosted = (currentdate.getMonth()+1)  + "/" 
@@ -127,10 +128,11 @@ handleSubmit(event){
     console.log(answerResults);
     var quizObj = {quiz:quiz,questions:questions,answers:answers,quizResults:quizResults,answerValues:answerResults};
     var quizJSON = JSON.stringify(quizObj);
+    console.log(typeof(quizID))
+    localStorage.setItem('qid',JSON.parse(quizJSON).quiz.quizID);
     localStorage.setItem('quiz', quizJSON);
     console.log(quizJSON);
     this.submitQuiz(quizJSON);
-    
     return(quizJSON);
 }
 cancelQuiz(){
