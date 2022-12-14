@@ -11,10 +11,6 @@ function Header() {
                 </ul>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <Link to="/TakeQuizzesPage" class="nav-link">Take Quizzes</Link>
-                    </li>
-
-                    <li class="nav-item">
                         <Link to="/makeQuiz" class="nav-link">Make a Quiz</Link>
                     </li>
 
