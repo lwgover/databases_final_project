@@ -16,7 +16,7 @@ export class QuizSearchPage extends React.Component {
     }
 
     displaySearchResults() {
-        console.log("displaying results");
+        //console.log("displaying results");
 
         if (!(this.state.hasSearched)) {
             return "Please search for a quiz";

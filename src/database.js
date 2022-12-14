@@ -248,8 +248,8 @@ function addAnswer(username, quizName, datePosted, questionNumber, answer, answe
 
 function addAnswerByID(questionID, answer, answerNumber) {
     let introQuery = "SELECT * FROM answers WHERE questionID = ?";
-    let questionID = db.prepare(introQuery).get(questionID);
-    if (questionID === undefined) {
+    let questionByID = db.prepare(introQuery).get(questionID);
+    if (questionByID === undefined) {
         return false;
     }
 
