@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './TakeQuizzesPage.css';
 import PropTypes from 'prop-types';
+import { cppdb } from 'better-sqlite3/lib/util';
 
 
 async function GetQuiz(qid) {
@@ -15,12 +16,15 @@ async function GetQuiz(qid) {
 }
 
 export default function TakeQuizzesPage() {
-  const qid = localStorage.getItem('qid')
-  const quizString = localStorage.getItem('quiz');
+  console.log(sessionStorage.getItem('quiz'));
+  const qid = sessionStorage.getItem('qid')
+  const quizString = sessionStorage.getItem('quiz');
   const quizFromStorage = JSON.parse(quizString);
   console.log(quizFromStorage);
-
+  var quizComplete =(sessionStorage.getItem('complete')==="true");
+  var quizFinalResult = sessionStorage.getItem('finalResult');
   const handleSubmit = async e => {
+    sessionStorage.setItem('complete',false);
     //e.preventDefault();
     if (JSON.stringify(qid).length >= 1) {
       const quizJSON = await GetQuiz({
@@ -28,7 +32,7 @@ export default function TakeQuizzesPage() {
       });
       console.log(quizJSON.quiz);
       if (JSON.stringify(quizJSON).length >= 1) { // change to whatever failing looks like
-        localStorage.setItem('quiz', JSON.stringify(quizJSON));
+        sessionStorage.setItem('quiz', JSON.stringify(quizJSON));
       }
     }
   }
@@ -55,29 +59,48 @@ export default function TakeQuizzesPage() {
     console.log(quizFromStorage.quiz.name); // name
     console.log(quizFromStorage.quiz.datePosted); // date posted
     console.log(quizFromStorage.questions); // questions
-
+    console.log((quizComplete)==="0")
     //Start making quiz here!
-
-    if (quizFromStorage != null) {
+    if ((quizFromStorage != null)&&(!quizComplete)) {
       return (
         <div className="TakeQuizzesPage-wrapper">
           <h1>{quizFromStorage.quiz.name}</h1>
           <h2>Created:{quizFromStorage.quiz.datePosted} by:{quizFromStorage.quiz.username}</h2>
           <h5>{JSON.stringify(quizFromStorage)}</h5>
-          <div>
+          <form onSubmit={completeQuiz}>
           {getQuestions()}
-          </div>
+          <button type="submit">Complete quiz.</button>
+          </form>
+          
         </div>
 
       )
 
-    } else {
+    } else if(quizComplete){
+      console.log(quizComplete);
+      return(
+        <div className="TakeQuizzesPage-wrapper">
+          <p>
+              {quizFinalResult}
+          </p>
+          <button onClick={resetPage}>Take new quiz!</button>
+        </div>
+      )
+    }else {
       return (
         <div className="TakeQuizzesPage-wrapper">
           <h1>You have a quiz ready! Refresh the page to begin!</h1>
         </div>
       )
     }
+  }
+  function resetPage(){
+    console.log("test");
+    sessionStorage.removeItem('complete');
+    sessionStorage.removeItem('quiz');
+    sessionStorage.removeItem('finalResult');
+    location.href="searchQuizzes";
+
   }
   function getQuestions() {
     var questionsHTML=[];
@@ -87,7 +110,7 @@ export default function TakeQuizzesPage() {
       var answers = selectQuestionsAnswer(quizFromStorage.answers,questionID);
       var answersHTML = [];
       for (var j = 0; j < 4; j++) {
-       var answerHTML = <div><input type="radio" id={answers[j].answerID} name= {questionID} value = {answers[j].answerID}></input><label for={answers[j].answerID}>{answers[j].answer}</label></div>;
+       var answerHTML = <div><input type="radio" id={answers[j].answerID} name= {questionID} value = {answers[j].answerID}></input><label>{answers[j].answer}</label></div>;
           answersHTML.push(answerHTML);
       }
       var questionHTML = <div><p>{question.question}</p><div>{answersHTML}</div></div>;
@@ -104,6 +127,46 @@ export default function TakeQuizzesPage() {
       }
     }
     return answers;
+  }
+  function completeQuiz(){
+     var resultVals = {};
+     const results = quizFromStorage.quizResults;
+     for(var i = 0;i<results.length;i++){
+      var resultName = results[i].result;
+      Object.defineProperty(resultVals, resultName, {
+        value: 0,
+        writable:true
+      })
+     }
+      for(var i =0; i<quizFromStorage.questions.length;i++){
+        var question = quizFromStorage.questions[i];
+        var questionID = question.questionID;
+        const answerID = document.getElementsByName(questionID).value;
+        const answerResults = getAnswerResults(answerID);
+        for(var j = 0;j<results.length;j++){
+          const currentResult = results[j].result;
+          resultVals[currentResult] =resultVals[currentResult] + answerResults[currentResult];
+         }
+
+      }
+      quizFinalResult = Math.max.apply(null,Object.keys(resultVals).map(function(x){ return obj[x] }));
+      sessionStorage.setItem('finalResult',quizFinalResult);
+      sessionStorage.setItem('complete',true);
+      
+  }
+  function getAnswerResults(answerID){
+    const answerVals = quizFromStorage.answerValues;
+    const results = quizFromStorage.results;
+    var addedResults = {};
+    for(var i=0;i<answerVals.length;i++){
+      var answerResult = answerVals[i];
+      if(answerResult.answerID===answerID){
+      Object.defineProperty(addedResults, answerResult.result, {
+        value: answerResult.value
+      })
+    }
+    }
+  return addedResults;
   }
 }
  

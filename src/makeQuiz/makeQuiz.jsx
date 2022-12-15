@@ -26,7 +26,6 @@ render() {
         <button type ="button" onClick = {this.addQuestion}>Create new question</button>
         <button type ="button"  onClick = {this.deleteQuestion}>Delete last question</button>
         <button type = "submit" >Submit Quiz</button>
-        <button type = "button"><Link to="/TakeQuizzesPage" class="nav-link">Take Quiz!</Link></button>
         </form>
     </div>)
 }
@@ -135,6 +134,7 @@ handleSubmit(event){
     localStorage.setItem('quiz', quizJSON);
     console.log(quizJSON);
     this.submitQuiz(quizJSON);
+    location.href = "takeQuizzesPage";
     return(quizJSON);
 }
 cancelQuiz(){
