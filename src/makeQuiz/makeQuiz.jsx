@@ -1,6 +1,7 @@
 import React from "react";
 import { index } from "./../index";
 import './makeQuiz.css';
+import {Link} from "react-router-dom"
 
 export class makeQuiz extends React.Component {
     
@@ -24,7 +25,8 @@ render() {
         </div>
         <button type ="button" onClick = {this.addQuestion}>Create new question</button>
         <button type ="button"  onClick = {this.deleteQuestion}>Delete last question</button>
-        <button type = "submit">Create Quiz!</button>
+        <button type = "submit" >Submit Quiz</button>
+        <button type = "button"><Link to="/TakeQuizzesPage" class="nav-link">Take Quiz!</Link></button>
         </form>
     </div>)
 }
