@@ -115,6 +115,7 @@ function addQuiz(username, quizName, datePosted) {
 function getQuizQuestions(username, quizName, datePosted) {
     let query = "WITH thisQuiz AS (SELECT * FROM quizzes WHERE username = ? AND quizName = ? AND datePosted = ?) SELECT * FROM thisQuiz NATURAL JOIN questions";
     let answers = db.prepare(query).all(username, quizName, datePosted);
+    return answers;
 } //EXPORTED
 
 //checks if a quiz by that user and author exists in the database
@@ -175,6 +176,80 @@ function idAddQuiz(quizID, quizName, username, datePosted, timesPlayed) {
     return true;
 } //EXPORTED
 
+function searchQuizByUser(username) {
+    let query = 'SELECT * FROM quizzes WHERE username = ?';
+    let results = db.prepare(query).all(username);
+    return results;
+}
+
+function getQuizInfo(quizID) {
+    //make the quizz info object
+    let info = {
+        quiz: null,
+        questions: null,
+        answers: null,
+        answerResults: null,
+        quizResults: null
+    }
+
+    //get the quiz information
+    let query = "SELECT * FROM quizzes WHERE quizID = ?";
+    let result = db.prepare(query).get(quizID);
+    if (result === undefined) {
+        return false;
+    }
+    else {
+        info.quiz = result;
+    }
+
+    //get the quiz questions
+    query = "WITH thisQuiz AS (SELECT * FROM quizzes WHERE quizID = ?) SELECT * FROM thisQuiz NATURAL JOIN questions";
+    result = db.prepare(query).all(quizID);
+    if (result === undefined) {
+        return false;
+    }
+    else {
+        info.questions = result;
+    }
+    
+    //get the answers to the questions
+    let answers = [];
+    for (let i = 0; i < info.questions.length; i++) {
+        result = getAnswersToOneQuestion(info.questions.questionID);
+        if (result === undefined) {
+            return false;
+        }
+        for (let j = 0; j < result.length; j++) {
+            answers.push(result[j]);
+        }
+    }
+    info.answers = answers;
+
+    //get the answer results
+    let answerResults = [];
+    for (let i = 0; i < info.answers.length; i++) {
+        result = getAnswersToOneQuestion(info.answers.answerID);
+        if (result === undefined) {
+            return false;
+        }
+        for (let j = 0; j < result.length; j++) {
+            answerResultss.push(result[j]);
+        }
+    }
+    info.answerResults = answerResults;
+    
+    //get the quiz results
+    result = getQuizResults(quizID);
+    if (result === undefined) {
+        return false;
+    }
+    else {
+        info.questions = result;
+    }
+
+    //return the object made
+    return info;
+}
 
 
 
@@ -343,6 +418,7 @@ module.exports.checkUserPassword = checkUserPassword;
 module.exports.removeUser = removeUser;
 module.exports.userExists = userExists;
 
+module.exports.getQuizInfo = getQuizInfo;
 module.exports.addQuiz = addQuiz;
 module.exports.getQuizQuestions = getQuizQuestions;
 module.exports.getQuizID = getQuizID;
@@ -350,6 +426,7 @@ module.exports.deleteQuiz = deleteQuiz;
 module.exports.quizExists = quizExists;
 module.exports.searchQuizNames = searchQuizNames;
 module.exports.idAddQuiz = idAddQuiz;
+module.exports.searchQuizByUser = searchQuizByUser;
 
 module.exports.addQuestion = addQuestion;
 module.exports.addQuestionByID = addQuestionByID;
