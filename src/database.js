@@ -391,14 +391,13 @@ function idAddAnswer(answerID, answer, questionID) {
 
 ////////// ANSWER VALUES //////////
 //add an answer value
-function addAnswerValueByID(answerID, result, value) {
+function addAnswerValueByID(answerID, result, value, quizID) {
     if (!answerExists(answerID)) {
         return false;
     }
-    console.log("we are adding an answer result for"+answerID);
 
-    let query = "INSERT INTO answerValues VALUES(?, ?, ?)";
-    db.prepare(query).run(answerID, result, value);
+    let query = "INSERT INTO answerValues VALUES(?, ?, ?, ?)";
+    db.prepare(query).run(answerID, result, value, quizID);
     return true;
 } //EXPORTED
 
