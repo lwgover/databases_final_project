@@ -159,9 +159,6 @@ deleteQuestion= ()=>{
 
     }
 }
-deleteAnswer(){
-
-}
 
 }
 export default makeQuiz

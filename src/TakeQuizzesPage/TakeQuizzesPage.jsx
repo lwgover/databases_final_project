@@ -5,12 +5,13 @@ import { cppdb } from 'better-sqlite3/lib/util';
 
 
 async function GetQuiz(qid) {
+  let quizID = {quizID: qid};
   return fetch('http://localhost:8080/TakeQuiz', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(qid)
+    body: JSON.stringify(quizID)
   })
     .then(data => data.json())
 }
@@ -23,15 +24,15 @@ export default function TakeQuizzesPage() {
   var quizComplete =(sessionStorage.getItem('complete')==="true");
   var quizFinalResult = sessionStorage.getItem('finalResult');
   const handleSubmit = async e => {
-    console.log("test");
+    console.log(qid);
     sessionStorage.setItem('complete',false);
     //e.preventDefault();
-    if (JSON.stringify(qid).length >= 1) {
+    if (qid.length >= 1) {
       const quizJSON = await GetQuiz({
         qid
       });
-      if (JSON.stringify(quizJSON).length >= 1) { // change to whatever failing looks like
-        sessionStorage.setItem('quiz', JSON.stringify(quizJSON));
+      if (quizJSON.length >= 1) { // change to whatever failing looks like
+        sessionStorage.setItem('quiz', quizJSON);
       }
     }
   }

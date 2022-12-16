@@ -25,16 +25,17 @@ app.use('/login', (req, res) => {
     });
   }
 });
-
-const data = require('./examplequiz.json');
 const { db } = require('./database');
 app.use('/TakeQuiz', (req, res) => {
   console.log(req.body);
   //console.log(req.body.username)
   //console.log(req.body.password)
-
-  if(true){
-    res.send(data);
+  let quizID = req.body.quizID.qid;
+  console.log(quizID);
+  console.log(typeof quizID);
+  let quiz = database.getQuizInfo(quizID);
+  res.send(quiz);
+  if(database.checkQuizID(quizID)){
   }else{
     res.send({
       user: "invalid User"
@@ -136,6 +137,9 @@ function submitQuizJSON(quiz){
     console.log(answerValues[i].answerID);
     console.log(answerValues[i].result);
     console.log(answerValues[i].value);
+    if(!database.addAnswerValueByID(answerValues[i].answerID, answerValues[i].result, answerValues[i].value)){
+      return 'failed at addAnswerValue: ' + answerValues[i].result;
+    }
   }
   return 'success';
 }
