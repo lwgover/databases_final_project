@@ -187,6 +187,7 @@ function searchQuizByUser(username) {
 }
 
 function getQuizInfo(quizID) {
+    console.log("getting Quiz with ID: "+quizID);
     //make the quizz info object
     let info = {
         quiz: null,
@@ -207,7 +208,7 @@ function getQuizInfo(quizID) {
     }
 
     //get the quiz questions
-    query = "WITH thisQuiz AS (SELECT * FROM quizzes WHERE quizID = ?) SELECT * FROM thisQuiz NATURAL JOIN questions";
+    query = "SELECT * FROM questions WHERE quizID = ?";
     result = db.prepare(query).all(quizID);
     if (result === undefined) {
         return false;
@@ -219,7 +220,8 @@ function getQuizInfo(quizID) {
     //get the answers to the questions
     let answers = [];
     for (let i = 0; i < info.questions.length; i++) {
-        result = getAnswersToOneQuestion(info.questions.questionID);
+        result = getAnswersToOneQuestion(info.questions[i].questionID);
+        console.log("answer "+ result);
         if (result === undefined) {
             return false;
         }
@@ -232,12 +234,14 @@ function getQuizInfo(quizID) {
     //get the answer results
     let answerResults = [];
     for (let i = 0; i < info.answers.length; i++) {
-        result = getAnswersToOneQuestion(info.answers.answerID);
+        result = getAnswerValues(info.answers[i].answerID);
+        console.log("answerResult")
+        console.log(result);
         if (result === undefined) {
             return false;
         }
         for (let j = 0; j < result.length; j++) {
-            answerResultss.push(result[j]);
+            answerResults.push(result[j]);
         }
     }
     info.answerResults = answerResults;
@@ -248,11 +252,12 @@ function getQuizInfo(quizID) {
         return false;
     }
     else {
-        info.questions = result;
+        info.quizResults = result;
     }
 
     //return the object made
-    return info;
+    console.log(info);
+    return JSON.stringify(info);
 }
 
 
@@ -379,9 +384,10 @@ function idAddAnswer(answerID, answer, questionID) {
 ////////// ANSWER VALUES //////////
 //add an answer value
 function addAnswerValueByID(answerID, result, value) {
-    if (!answerExists) {
+    if (!answerExists(answerID)) {
         return false;
     }
+    console.log("we are adding an answer result for"+answerID);
 
     let query = "INSERT INTO answerValues VALUES(?, ?, ?)";
     db.prepare(query).run(answerID, result, value);
@@ -433,6 +439,7 @@ module.exports.quizExists = quizExists;
 module.exports.searchQuizNames = searchQuizNames;
 module.exports.idAddQuiz = idAddQuiz;
 module.exports.searchQuizByUser = searchQuizByUser;
+module.exports.checkQuizID = checkQuizID;
 
 module.exports.addQuestion = addQuestion;
 module.exports.addQuestionByID = addQuestionByID;
