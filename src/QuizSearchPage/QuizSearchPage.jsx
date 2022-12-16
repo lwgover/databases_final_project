@@ -61,6 +61,8 @@ export class QuizSearchPage extends React.Component {
         if (this.state.value === "") {
             return;
         }
+        sessionStorage.setItem('complete',false);
+        sessionStorage.removeItem('quiz');
         this.setState({hasSearched: true}); //mark that the user has searched at least once since the page loaded
         
         //let databaseSearch = database.searchQuizNames(this.state.value); //search the database

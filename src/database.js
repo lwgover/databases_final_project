@@ -178,7 +178,7 @@ function searchQuizNames(quizName) {
 } //EXPORTED
 
 function idAddQuiz(quizID, quizName, username, datePosted, timesPlayed) {
-    if(!checkQuizID(quizID)) { //uninvert later
+    if(checkQuizID(quizID)) { //uninvert later
         return false;
     }
     //add the quiz to the database
@@ -392,6 +392,10 @@ function idAddAnswer(answerID, answer, questionID) {
 ////////// ANSWER VALUES //////////
 //add an answer value
 function addAnswerValueByID(answerID, result, value, quizID) {
+    console.log(answerID);
+    console.log(result);
+    console.log(value);
+    console.log(quizID);
     if (!answerExists(answerID)) {
         return false;
     }

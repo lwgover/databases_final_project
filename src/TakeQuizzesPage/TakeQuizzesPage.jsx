@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './TakeQuizzesPage.css';
 import PropTypes from 'prop-types';
 import { cppdb } from 'better-sqlite3/lib/util';
+import {Link} from "react-router-dom"
 
 
 async function GetQuiz(qid) {
@@ -19,25 +20,28 @@ async function GetQuiz(qid) {
 export default function TakeQuizzesPage() {
   const qid = sessionStorage.getItem('quizID');
   console.log(qid);
+  const quizComplete =(sessionStorage.getItem('complete')==="true");
   const quizFromStorage = JSON.parse(sessionStorage.getItem('quiz'));
-  console.log(quizFromStorage);
-  var quizComplete =(sessionStorage.getItem('complete')==="true");
-  var quizFinalResult = sessionStorage.getItem('finalResult');
+  console.log(quizComplete);
   const handleSubmit = async e => {
     console.log(qid);
-    sessionStorage.setItem('complete',false);
     //e.preventDefault();
-    if (qid.length >= 1) {
+    if (qid.length >= 1&&!quizComplete) {
+      console.log("setting quiz")
       const quizJSON = await GetQuiz({
         qid
       });
       if (quizJSON.length >= 1) { // change to whatever failing looks like
+        console.log("setting quiz2")
         sessionStorage.setItem('quiz', quizJSON);
       }
+      console.log(sessionStorage.getItem('quiz'));
     }
   }
   handleSubmit();
-
+  console.log(sessionStorage.getItem('quiz'));
+  console.log(sessionStorage.getItem('quiz'));
+  console.log(quizFromStorage);
 
   //const quiz = handleSubmit(e);
   if (quizFromStorage == null) {
@@ -59,7 +63,7 @@ export default function TakeQuizzesPage() {
     console.log(quizFromStorage.quiz.name); // name
     console.log(quizFromStorage.quiz.datePosted); // date posted
     console.log(quizFromStorage.questions); // questions
-    console.log((quizComplete)==="0")
+    console.log(quizComplete)
     //Start making quiz here!
     if ((quizFromStorage != null)&&(!quizComplete)) {
       return (
@@ -82,7 +86,7 @@ export default function TakeQuizzesPage() {
           <p>
               You got the result: {sessionStorage.getItem('finalResult')}
           </p>
-          <button onClick={resetPage}>Take new quiz!</button>
+          <Link to="/SearchQuizzes" class="nav-link"><button>Take new quiz!</button></Link>
         </div>
       )
     }else {
@@ -127,6 +131,8 @@ export default function TakeQuizzesPage() {
     return answers;
   }
   function completeQuiz(){
+    event.preventDefault();
+    console.log(quizFromStorage);
      const results = quizFromStorage.quizResults;
      const resultNames = [];
      const resultVals = {};
@@ -170,13 +176,15 @@ export default function TakeQuizzesPage() {
       for(var i = 0; i<resultNames.length;i++){
         if(resultVals[resultNames[i]]===max){
           sessionStorage.setItem('finalResult',resultNames[i]);
+          sessionStorage.setItem('complete',true);
         }
+        location.reload();
       }
-      sessionStorage.setItem('complete',true);
       
   }
   function getAnswerResults(answerID){
-    const answerVals = quizFromStorage.answerValues;
+    const answerVals = quizFromStorage.answerResults;
+    console.log(quizFromStorage);
     const results = quizFromStorage.results;
     var addedResults = {};
     for(var i=0;i<answerVals.length;i++){
