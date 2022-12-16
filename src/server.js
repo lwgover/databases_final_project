@@ -83,6 +83,20 @@ app.use('/SearchQuizzes', (req, res) => {
   res.json(results);
 });
 
+app.use('/UsersQuizzes',(req, res) => {
+  console.log("getting quizzes created by the user")
+
+  let searchTerm = req.body.searchTerm;
+  let results = database.searchQuizByUser(searchTerm);
+
+  if (results === undefined) {
+    results = null;
+  }
+
+  res.json(results);
+})
+
+
 app.listen(8080, () => console.log('API is running on http://localhost:8080/'));
 
 function submitQuizJSON(quiz){

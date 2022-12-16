@@ -112,6 +112,15 @@ function addQuiz(username, quizName, datePosted) {
     return true;
 } //EXPORTED
 
+function incrementTimesPlayed(quizID) {
+    if(!checkQuizID(quizID)) { //uninvert later
+        return false;
+    }
+    let query = "UPDATE quizzes SET timesTaken = timesTaken + 1 WHERE quizID = ?";
+    db.prepare(query).run(quizID);
+    return true;
+}
+
 //get quiz questions and answers
 function getQuizQuestions(username, quizName, datePosted) {
     let query = "WITH thisQuiz AS (SELECT * FROM quizzes WHERE username = ? AND quizName = ? AND datePosted = ?) SELECT * FROM thisQuiz NATURAL JOIN questions";
@@ -151,7 +160,6 @@ function getQuizID(username, quizName, datePosted) {
 
 //makes sure the quizID exists, true if it does, false if not
 function checkQuizID(quizID) {
-    return true; // remove later
     let query = "SELECT * FROM quizzes WHERE quizID = ?";
     let result = db.prepare(query).get(quizID);
     console.log(result); 
@@ -379,7 +387,7 @@ function idAddAnswer(answerID, answer, questionID) {
 ////////// ANSWER VALUES //////////
 //add an answer value
 function addAnswerValueByID(answerID, result, value) {
-    if (!answerExists) {
+    if (!answerExists(answerID)) {
         return false;
     }
 
@@ -424,6 +432,7 @@ module.exports.checkUserPassword = checkUserPassword;
 module.exports.removeUser = removeUser;
 module.exports.userExists = userExists;
 
+module.exports.incrementTimesPlayed = incrementTimesPlayed;
 module.exports.getQuizInfo = getQuizInfo;
 module.exports.addQuiz = addQuiz;
 module.exports.getQuizQuestions = getQuizQuestions;
