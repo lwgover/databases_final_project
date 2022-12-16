@@ -15,6 +15,12 @@ function UserPage({ username }) {
         <UserStuff />
     </div>
 }
+ async function handleSubmit(event) {
+    console.log("hello");
+    event.preventDefault();
+    localStorage.clear();
+    location.reload(false);
+}
 
 function UserStuff({ username }) {
 
@@ -25,7 +31,7 @@ function UserStuff({ username }) {
     }
 
     return <div style={style}>
-        <form onSubmit={localStorage.clear()}>
+        <form onSubmit={handleSubmit}>
             <div>
                 <button type="submit">log out</button>
             </div>

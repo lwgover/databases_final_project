@@ -87,7 +87,8 @@ function changePassword(username) {
 //Add a quiz created by a user. Returns false if a quiz by that user, by that name, posted at that time already exists
 function addQuiz(username, quizName, datePosted) {
     //does this quiz already exist?
-    if (getQuizID(username, quizName, datePosted) === undefined) {
+    if (getQuizID(username, quizName, datePosted) != undefined) {
+        console.log('undefined');
         return false;
     }
 
@@ -150,9 +151,11 @@ function getQuizID(username, quizName, datePosted) {
 
 //makes sure the quizID exists, true if it does, false if not
 function checkQuizID(quizID) {
+    return true; // remove later
     let query = "SELECT * FROM quizzes WHERE quizID = ?";
     let result = db.prepare(query).get(quizID);
-    if (result === undefined) {
+    console.log(result); 
+    if (result == undefined) {
         return false;
     }
     return true;
@@ -167,12 +170,13 @@ function searchQuizNames(quizName) {
 } //EXPORTED
 
 function idAddQuiz(quizID, quizName, username, datePosted, timesPlayed) {
-    if(!checkQuizID(quizID)) {
+    if(!checkQuizID(quizID)) { //uninvert later
         return false;
     }
     //add the quiz to the database
     let query = "INSERT INTO quizzes VALUES(?, ?, ?, ?, ?)";
-    db.prepare(query).run(quizID, quizName, username, datePosted, timesPlayed);
+    
+    db.prepare(query).run(quizID, quizName, username, datePosted, 0);
     return true;
 } //EXPORTED
 
@@ -258,7 +262,7 @@ function getQuizInfo(quizID) {
 function addQuestion(username, quizName, datePosted, questionNumber, question) {
     //get the quiz ID, deal with it
     let quizID = this.getQuizID(username, quizName, datePosted);
-    if (quizID === undefined) {
+    if (quizID == undefined) {
         return false;
     }
 
@@ -301,6 +305,7 @@ function idAddQuestion(questionID, question, quizID, questionOrder) {
     //insert the question, now that we have the quizID
     let query = "INSERT INTO questions VALUES(?, ?, ?, ?)";
     db.prepare(query).run(questionID, question, quizID, questionOrder);
+    return true;
 } //EXPORTED
 
 
@@ -365,6 +370,7 @@ function answerExists(answerID) {
 function idAddAnswer(answerID, answer, questionID) {
     let query = "INSERT INTO answers VALUES(?, ?, ?)";
     db.prepare(query).run(answerID, answer, questionID);
+    return true;
 } //EXPORTED
 
 
