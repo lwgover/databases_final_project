@@ -17,6 +17,7 @@ export class QuizSearchPage extends React.Component {
     }
 
     displaySearchResults() {
+        sessionStorage.removeItem('qid');
         //console.log("displaying results");
 
         if (!(this.state.hasSearched)) {
@@ -44,7 +45,7 @@ export class QuizSearchPage extends React.Component {
                         Times played: {this.state.searchResults[i].timesPlayed}
                     </span>
                     <Link to="/TakeQuizzesPage" class="nav-link">
-                        <button type="button" onClick={localStorage.setItem('qid',this.state.searchResults[i].quizName)}>
+                        <button type="button" onClick={sessionStorage.setItem('quizID',this.state.searchResults[i].quizID)}>
                             Take Quiz
                         </button>
                     </Link>

@@ -130,8 +130,8 @@ handleSubmit(event){
     var quizObj = {quiz:quiz,questions:questions,answers:answers,quizResults:quizResults,answerValues:answerResults};
     var quizJSON = JSON.stringify(quizObj);
     console.log(typeof(quizID))
-    localStorage.setItem('qid',JSON.parse(quizJSON).quiz.quizID);
-    localStorage.setItem('quiz', quizJSON);
+    sessionStorage.setItem('qid',JSON.parse(quizJSON).quiz.quizID);
+    sessionStorage.setItem('quiz', quizJSON);
     console.log(quizJSON);
     this.submitQuiz(quizJSON);
     location.href = "takeQuizzesPage";

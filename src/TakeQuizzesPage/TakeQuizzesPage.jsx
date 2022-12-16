@@ -16,21 +16,20 @@ async function GetQuiz(qid) {
 }
 
 export default function TakeQuizzesPage() {
-  console.log(sessionStorage.getItem('quiz'));
-  const qid = sessionStorage.getItem('qid')
-  const quizString = sessionStorage.getItem('quiz');
-  const quizFromStorage = JSON.parse(quizString);
+  const qid = sessionStorage.getItem('quizID');
+  console.log(qid);
+  const quizFromStorage = JSON.parse(sessionStorage.getItem('quiz'));
   console.log(quizFromStorage);
   var quizComplete =(sessionStorage.getItem('complete')==="true");
   var quizFinalResult = sessionStorage.getItem('finalResult');
   const handleSubmit = async e => {
+    console.log("test");
     sessionStorage.setItem('complete',false);
     //e.preventDefault();
     if (JSON.stringify(qid).length >= 1) {
       const quizJSON = await GetQuiz({
         qid
       });
-      console.log(quizJSON.quiz);
       if (JSON.stringify(quizJSON).length >= 1) { // change to whatever failing looks like
         sessionStorage.setItem('quiz', JSON.stringify(quizJSON));
       }
@@ -66,7 +65,6 @@ export default function TakeQuizzesPage() {
         <div className="TakeQuizzesPage-wrapper">
           <h1>{quizFromStorage.quiz.name}</h1>
           <h2>Created:{quizFromStorage.quiz.datePosted} by:{quizFromStorage.quiz.username}</h2>
-          <h5>{JSON.stringify(quizFromStorage)}</h5>
           <form onSubmit={completeQuiz}>
           {getQuestions()}
           <button type="submit">Complete quiz.</button>
@@ -77,11 +75,11 @@ export default function TakeQuizzesPage() {
       )
 
     } else if(quizComplete){
-      console.log(quizComplete);
+      console.log(sessionStorage.getItem('finalResult'));
       return(
         <div className="TakeQuizzesPage-wrapper">
           <p>
-              {quizFinalResult}
+              You got the result: {sessionStorage.getItem('finalResult')}
           </p>
           <button onClick={resetPage}>Take new quiz!</button>
         </div>
@@ -116,7 +114,6 @@ export default function TakeQuizzesPage() {
       var questionHTML = <div><p>{question.question}</p><div>{answersHTML}</div></div>;
       questionsHTML.push(questionHTML);
     }
-    console.log(questionsHTML);
       return <div>{questionsHTML}</div>
   }
   function selectQuestionsAnswer(array,questionID){
@@ -129,10 +126,12 @@ export default function TakeQuizzesPage() {
     return answers;
   }
   function completeQuiz(){
-     var resultVals = {};
      const results = quizFromStorage.quizResults;
+     const resultNames = [];
+     const resultVals = {};
      for(var i = 0;i<results.length;i++){
       var resultName = results[i].result;
+      resultNames.push(resultName);
       Object.defineProperty(resultVals, resultName, {
         value: 0,
         writable:true
@@ -141,16 +140,37 @@ export default function TakeQuizzesPage() {
       for(var i =0; i<quizFromStorage.questions.length;i++){
         var question = quizFromStorage.questions[i];
         var questionID = question.questionID;
-        const answerID = document.getElementsByName(questionID).value;
+        var answerHTML = document.getElementsByName(questionID);
+        console.log(answerHTML);
+        var answerID;
+        for(var j = 0;j <answerHTML.length;j++){
+        if(answerHTML[j].checked){
+        answerID =answerHTML[j].value;
+        }
+      }
+      console.log(answerID);
         const answerResults = getAnswerResults(answerID);
         for(var j = 0;j<results.length;j++){
-          const currentResult = results[j].result;
-          resultVals[currentResult] =resultVals[currentResult] + answerResults[currentResult];
+          const currentResult = resultNames[j];
+          resultVals[currentResult] =(parseInt(resultVals[currentResult]) + parseInt(answerResults[currentResult]));
          }
 
+
       }
-      quizFinalResult = Math.max.apply(null,Object.keys(resultVals).map(function(x){ return obj[x] }));
-      sessionStorage.setItem('finalResult',quizFinalResult);
+      console.log(resultVals);
+      var resultArray = [];
+      for(var i = 0; i<resultNames.length;i++){
+        resultArray[i] = resultVals[resultNames[i]];
+        console.log(typeof resultArray[i]);
+      }
+      console.log(resultArray);
+      const max = Math.max(...resultArray);
+      console.log(max);
+      for(var i = 0; i<resultNames.length;i++){
+        if(resultVals[resultNames[i]]===max){
+          sessionStorage.setItem('finalResult',resultNames[i]);
+        }
+      }
       sessionStorage.setItem('complete',true);
       
   }
@@ -166,6 +186,7 @@ export default function TakeQuizzesPage() {
       })
     }
     }
+    console.log(addedResults);
   return addedResults;
   }
 }
