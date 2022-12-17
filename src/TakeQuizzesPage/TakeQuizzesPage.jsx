@@ -3,9 +3,80 @@ import './TakeQuizzesPage.css';
 import PropTypes from 'prop-types';
 import { cppdb } from 'better-sqlite3/lib/util';
 import {Link} from "react-router-dom"
+export class TakeQuizzesPage extends React.Component {
+  constructor(){
+
+      super();
+      this.state={value: '',
+        quiz:'{}',
+          complete:false
+      };
+  }
+  componentDidMount() {
+    this.handleSubmit();
+}
+  render(){
+    const quizComplete =(sessionStorage.getItem('complete')==="true");
+    console.log(quizComplete);
+    const quizFromStorage = JSON.parse(this.state.quiz);
+    console.log(quizFromStorage);
+    console.log(quizFromStorage);
+    console.log((quizFromStorage.length>0)&&(!quizComplete));
+    console.log(quizFromStorage.keys);
+    if ((quizFromStorage.hasOwnProperty('quiz'))&&(!quizComplete)) {
+      return (
+        <div className="TakeQuizzesPage-wrapper">
+          <h1>{quizFromStorage.quiz.quizName}</h1>
+          <h2>Created:{quizFromStorage.quiz.datePosted} by:{quizFromStorage.quiz.username}</h2>
+          <form onSubmit={e=>this.completeQuiz(quizFromStorage)}>
+          {this.getQuestions(quizFromStorage)}
+          <button type="submit">Complete quiz.</button>
+          </form>
+          
+        </div>
+
+      )
+
+    } else if(quizComplete){
+      return (
+        <div className="TakeQuizzesPage-wrapper">
+          <p>
+              You got the result: {sessionStorage.getItem('finalResult')}
+          </p>
+          <Link to="/SearchQuizzes" class="nav-link"><button>Take new quiz!</button></Link>
+        </div>
+      );
+    }else {
+      return(
+        <div>
+
+          <div></div>
+        </div>
+      );
+    }
+  
+  }
 
 
-async function GetQuiz(qid) {
+async obtainQuiz() {
+  console.log(qid);
+  await this.handleSubmit(qid,quizComplete);
+  }
+
+  async handleSubmit(){
+    const quizComplete =(sessionStorage.getItem('complete')==="true");
+  const qid = sessionStorage.getItem('quizID');
+    if (qid.length >= 1&&!quizComplete) {
+      console.log("setting quiz")
+      const quizJSON = await this.GetQuiz({
+        qid
+    });
+      
+      this.setState({quiz : quizJSON});
+      console.log("test2");
+    }
+}
+  GetQuiz(qid) {
   let quizID = {quizID: qid};
   return fetch('http://localhost:8080/TakeQuiz', {
     method: 'POST',
@@ -17,87 +88,10 @@ async function GetQuiz(qid) {
     .then(data => data.json())
 }
 
-export default function TakeQuizzesPage() {
-  const qid = sessionStorage.getItem('quizID');
-  console.log(qid);
-  const quizComplete =(sessionStorage.getItem('complete')==="true");
-  const quizFromStorage = JSON.parse(sessionStorage.getItem('quiz'));
-  console.log(quizComplete);
-  const handleSubmit = async e => {
-    console.log(qid);
-    //e.preventDefault();
-    if (qid.length >= 1&&!quizComplete) {
-      console.log("setting quiz")
-      const quizJSON = await GetQuiz({
-        qid
-      });
-      if (quizJSON.length >= 1) { // change to whatever failing looks like
-        console.log("setting quiz2")
-        sessionStorage.setItem('quiz', quizJSON);
-      }
-      console.log(sessionStorage.getItem('quiz'));
-    }
-  }
-  handleSubmit();
-  console.log(sessionStorage.getItem('quiz'));
-  console.log(sessionStorage.getItem('quiz'));
-  console.log(quizFromStorage);
 
-  //const quiz = handleSubmit(e);
-  if (quizFromStorage == null) {
-    return (
-      <div className="TakeQuizzesPage-wrapper">
-        <h1>It's quiz time!</h1>
-        <form onSubmit={handleSubmit}>
-          <label>
-            <p>which quiz id do you want to take?</p>
-            <input type="text" onChange={e => setQID(e.target.value)} />
-          </label>
-          <div>
-            <button type="submit">Submit</button>
-          </div>
-        </form>
-      </div>
-    )
-  } else {
-    console.log(quizFromStorage.quiz.name); // name
-    console.log(quizFromStorage.quiz.datePosted); // date posted
-    console.log(quizFromStorage.questions); // questions
-    console.log(quizComplete)
-    //Start making quiz here!
-    if ((quizFromStorage != null)&&(!quizComplete)) {
-      return (
-        <div className="TakeQuizzesPage-wrapper">
-          <h1>{quizFromStorage.quiz.name}</h1>
-          <h2>Created:{quizFromStorage.quiz.datePosted} by:{quizFromStorage.quiz.username}</h2>
-          <form onSubmit={completeQuiz}>
-          {getQuestions()}
-          <button type="submit">Complete quiz.</button>
-          </form>
-          
-        </div>
+  
 
-      )
-
-    } else if(quizComplete){
-      console.log(sessionStorage.getItem('finalResult'));
-      return(
-        <div className="TakeQuizzesPage-wrapper">
-          <p>
-              You got the result: {sessionStorage.getItem('finalResult')}
-          </p>
-          <Link to="/SearchQuizzes" class="nav-link"><button>Take new quiz!</button></Link>
-        </div>
-      )
-    }else {
-      return (
-        <div className="TakeQuizzesPage-wrapper">
-          <h1>You have a quiz ready! Refresh the page to begin!</h1>
-        </div>
-      )
-    }
-  }
-  function resetPage(){
+  resetPage(){
     console.log("test");
     sessionStorage.removeItem('complete');
     sessionStorage.removeItem('quiz');
@@ -105,12 +99,12 @@ export default function TakeQuizzesPage() {
     location.href="searchQuizzes";
 
   }
-  function getQuestions() {
+ getQuestions(quizFromStorage) {
     var questionsHTML=[];
     for (var i = 0; i < quizFromStorage.questions.length; i++) {
       var question = quizFromStorage.questions[i];
       var questionID = question.questionID;
-      var answers = selectQuestionsAnswer(quizFromStorage.answers,questionID);
+      var answers = this.selectQuestionsAnswer(quizFromStorage.answers,questionID);
       var answersHTML = [];
       for (var j = 0; j < 4; j++) {
        var answerHTML = <div><input type="radio" id={answers[j].answerID} name= {questionID} value = {answers[j].answerID}></input><label>{answers[j].answer}</label></div>;
@@ -121,7 +115,7 @@ export default function TakeQuizzesPage() {
     }
       return <div>{questionsHTML}</div>
   }
-  function selectQuestionsAnswer(array,questionID){
+  selectQuestionsAnswer(array,questionID){
     var answers = [];
     for(var i=0;i<array.length;i++){
       if(array[i].questionID === questionID){
@@ -130,9 +124,7 @@ export default function TakeQuizzesPage() {
     }
     return answers;
   }
-  function completeQuiz(){
-    event.preventDefault();
-    console.log(quizFromStorage);
+  completeQuiz(quizFromStorage){
      const results = quizFromStorage.quizResults;
      const resultNames = [];
      const resultVals = {};
@@ -156,7 +148,7 @@ export default function TakeQuizzesPage() {
         }
       }
       console.log(answerID);
-        const answerResults = getAnswerResults(answerID);
+        const answerResults = this.getAnswerResults(answerID,quizFromStorage);
         for(var j = 0;j<results.length;j++){
           const currentResult = resultNames[j];
           resultVals[currentResult] =(parseInt(resultVals[currentResult]) + parseInt(answerResults[currentResult]));
@@ -178,14 +170,15 @@ export default function TakeQuizzesPage() {
           sessionStorage.setItem('finalResult',resultNames[i]);
           sessionStorage.setItem('complete',true);
         }
-        location.reload();
       }
+      //location.reload();
       
   }
-  function getAnswerResults(answerID){
+  getAnswerResults(answerID,quizFromStorage){
     const answerVals = quizFromStorage.answerResults;
-    console.log(quizFromStorage);
+    console.log(answerID);
     const results = quizFromStorage.results;
+    console.log(answerVals);
     var addedResults = {};
     for(var i=0;i<answerVals.length;i++){
       var answerResult = answerVals[i];
@@ -198,9 +191,9 @@ export default function TakeQuizzesPage() {
     console.log(addedResults);
   return addedResults;
   }
-}
+
  
-function Question(questionTitle) {
+ Question(questionTitle) {
 
   const style = {
     margin: "auto",
@@ -220,3 +213,5 @@ function Question(questionTitle) {
     </form>
   </div>
 }
+}
+export default TakeQuizzesPage;
