@@ -25,7 +25,6 @@ async function loginUser(credentials) {
       username,
       password
     });
-    console.log(JSON.stringify(token));
     if((JSON.stringify(token) == '{"user":"Invalid User"}')){
       localStorage.setItem('loginFailed','true')
     }

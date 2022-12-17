@@ -7,13 +7,15 @@ export class UserPage extends React.Component {
         super();
         this.state = {
             username: null,
-            quizzes: []
+            quizzes: null,
+            displayQuiz: false
         };
 
         this.queryDatabase = this.queryDatabase.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.setUsername = this.setUsername.bind(this);
         this.handleQuizzesSubmit = this.handleQuizzesSubmit.bind(this);
+        this.formatResult = this.formatResult.bind(this);
     }
 
 
@@ -35,7 +37,6 @@ export class UserPage extends React.Component {
 
 
     async handleSubmit(event) {
-        console.log("hello");
         event.preventDefault();
         localStorage.clear();
         location.reload(false);
@@ -43,33 +44,25 @@ export class UserPage extends React.Component {
 
     async handleQuizzesSubmit(event) {
         event.preventDefault();
-        if (this.state.value === "") {
-            return;
-        }
 
         //let databaseSearch = database.searchQuizNames(this.state.value); //search the database
         let databaseSearch = await this.queryDatabase(this.state.value);
 
-        console.log(databaseSearch);
 
-        if (databaseSearch === null) { //if the search didn't find anything,
-            this.setState({ searchResults: [] }); //set the results to an empty array
-        }
-
-        else {
-            this.setState({ quizzes: databaseSearch });
-        }
-
+        this.setState({ quizzes: databaseSearch, displayQuiz: true });
     }
 
-    async displayUserQuizzes() {
+    displayUserQuizzes() {
+        if (!(this.state.displayQuiz)) {
+            return <div></div>;
+        }
         if (this.state.quizzes === null) {
-            return "You have not made any quizzes";
+            return (<div>You have not made any quizzes</div>);
         }
 
         let results = [];
-        for (let i = 0; i < this.state.quizzes.length.length; i++) {
-            let oneResult = formatResult(this.state.quizzes[i]);
+        for (let i = 0; i < this.state.quizzes.length; i++) {
+            let oneResult = this.formatResult(this.state.quizzes[i]);
             results.push(oneResult);
         }
         return results;
@@ -123,7 +116,6 @@ export class UserPage extends React.Component {
 
     componentDidMount() {
         this.setUsername();
-        console.log(this.state.username);
     }
 
     render() {
@@ -135,18 +127,20 @@ export class UserPage extends React.Component {
         return (
             <div style={style}>
                 <div style={{ "fontSize": "96px" }}>
-                    {this.state.username}
+                    <p>{this.state.username}</p>
                 </div>
                 <div id="userStuff">
                     {this.UserStuff()}
                 </div>
                 <div id="quizzes">
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleQuizzesSubmit}>
                         <div>
                             <button type="submit">Display my quizzes</button>
                         </div>
                     </form>
-                    {this.displayUserQuizzes()}
+                    <div>
+                        {this.displayUserQuizzes()}
+                    </div>
                 </div>
             </div>)
     }

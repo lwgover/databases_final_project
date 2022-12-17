@@ -9,7 +9,6 @@ export class makeQuiz extends React.Component {
         super();
         this.state={count:0,results:0};
         this.user = user.user;
-        console.log("I'm getting: " + this.user);
     }
 render() {
     return( <div id="makeQuizWrapper">
@@ -70,7 +69,6 @@ for(var i=0;i<this.state.results;i++){
 return resultRanges;
 }
 handleSubmit(event){
-    console.log('handling submit!');
     event.preventDefault();
     var username = this.user;
     var currentdate = new Date(); 
@@ -88,7 +86,6 @@ handleSubmit(event){
     var quizwords = quizName.split(' ');
     var quizIDName ="";
     for(var i =0; i<quizwords.length;i++){
-        console.log(quizwords[i]);
         quizIDName+=quizwords[i];
     }
 
@@ -123,16 +120,10 @@ handleSubmit(event){
             }
         }
     }
-    console.log(quizResults);
-    console.log(questions);
-    console.log(answers);
-    console.log(answerResults);
     var quizObj = {quiz:quiz,questions:questions,answers:answers,quizResults:quizResults,answerValues:answerResults};
     var quizJSON = JSON.stringify(quizObj);
-    console.log(typeof(quizID))
     sessionStorage.setItem('quizID',JSON.parse(quizJSON).quiz.quizID);
     sessionStorage.setItem('complete', false);
-    console.log(quizJSON);
     this.submitQuiz(quizJSON);
     location.href = "takeQuizzesPage";
     return(quizJSON);

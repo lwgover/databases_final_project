@@ -18,7 +18,6 @@ export class QuizSearchPage extends React.Component {
 
     displaySearchResults() {
         sessionStorage.removeItem('qid');
-        //console.log("displaying results");
 
         if (!(this.state.hasSearched)) {
             return "Please search for a quiz";
@@ -55,7 +54,6 @@ export class QuizSearchPage extends React.Component {
         return results;
     }
     replaceQuizID(i){
-        console.log(i);
         sessionStorage.removeItem('quizID');
         sessionStorage.setItem('quizID',this.state.searchResults[i].quizID);
     }
@@ -72,7 +70,6 @@ export class QuizSearchPage extends React.Component {
         //let databaseSearch = database.searchQuizNames(this.state.value); //search the database
         let databaseSearch = await this.queryDatabase(this.state.value);
 
-        console.log(databaseSearch);
 
         if (databaseSearch === null) { //if the search didn't find anything,
             this.setState({searchResults: []}); //set the results to an empty array
@@ -89,7 +86,6 @@ export class QuizSearchPage extends React.Component {
     }
 
     queryDatabase(quizName) {
-        console.log("query databse with " + quizName);
 
         let searchTerm = {searchTerm: quizName};
 

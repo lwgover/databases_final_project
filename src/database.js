@@ -88,7 +88,6 @@ function changePassword(username) {
 function addQuiz(username, quizName, datePosted) {
     //does this quiz already exist?
     if (getQuizID(username, quizName, datePosted) != undefined) {
-        console.log('undefined');
         return false;
     }
 
@@ -162,7 +161,6 @@ function getQuizID(username, quizName, datePosted) {
 function checkQuizID(quizID) {
     let query = "SELECT * FROM quizzes WHERE quizID = ?";
     let result = db.prepare(query).get(quizID);
-    console.log(result); 
     if (result == undefined) {
         return false;
     }
@@ -195,7 +193,6 @@ function searchQuizByUser(username) {
 }
 
 function getQuizInfo(quizID) {
-    console.log("getting Quiz with ID: "+quizID);
     //make the quizz info object
     let info = {
         quiz: null,
@@ -229,7 +226,6 @@ function getQuizInfo(quizID) {
     let answers = [];
     for (let i = 0; i < info.questions.length; i++) {
         result = getAnswersToOneQuestion(info.questions[i].questionID);
-        console.log("answer "+ result);
         if (result === undefined) {
             return false;
         }
@@ -243,8 +239,6 @@ function getQuizInfo(quizID) {
     let answerResults = [];
     for (let i = 0; i < info.answers.length; i++) {
         result = getAnswerValues(info.answers[i].answerID);
-        console.log("answerResult")
-        console.log(result);
         if (result === undefined) {
             return false;
         }
@@ -264,7 +258,6 @@ function getQuizInfo(quizID) {
     }
 
     //return the object made
-    console.log(info);
     return JSON.stringify(info);
 }
 
@@ -392,10 +385,6 @@ function idAddAnswer(answerID, answer, questionID) {
 ////////// ANSWER VALUES //////////
 //add an answer value
 function addAnswerValueByID(answerID, result, value, quizID) {
-    console.log(answerID);
-    console.log(result);
-    console.log(value);
-    console.log(quizID);
     if (!answerExists(answerID)) {
         return false;
     }

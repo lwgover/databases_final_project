@@ -19,7 +19,6 @@ async function CreateUserUser(credentials) {
         color: "Red",
         h1: {'text-align':'center'}
       }
-      console.log('passwords are' + booleanMatch);
       if(booleanMatch){
         return (
             <div>Those are some good passwords</div>
@@ -45,7 +44,6 @@ export default function CreateUser({setToken}) {
             username,
             password
         });
-        console.log(token);
         setToken(token);
         this.context.router.history.push('');
     }
