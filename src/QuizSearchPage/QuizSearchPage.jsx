@@ -45,7 +45,7 @@ export class QuizSearchPage extends React.Component {
                         Times played: {this.state.searchResults[i].timesPlayed}
                     </span>
                     <Link to="/TakeQuizzesPage" class="nav-link">
-                        <button type="button" onClick={sessionStorage.setItem('quizID',this.state.searchResults[i].quizID)}>
+                        <button type="button" onClick={e=>this.replaceQuizID(i)}>
                             Take Quiz
                         </button>
                     </Link>
@@ -54,13 +54,19 @@ export class QuizSearchPage extends React.Component {
         }
         return results;
     }
-
+    replaceQuizID(i){
+        console.log(i);
+        sessionStorage.removeItem('quizID');
+        sessionStorage.setItem('quizID',this.state.searchResults[i].quizID);
+    }
     //does the actual searching
     async handleSubmit(event) {
         event.preventDefault();
         if (this.state.value === "") {
             return;
         }
+        sessionStorage.setItem('complete',false);
+        sessionStorage.removeItem('quiz');
         this.setState({hasSearched: true}); //mark that the user has searched at least once since the page loaded
         
         //let databaseSearch = database.searchQuizNames(this.state.value); //search the database
@@ -96,7 +102,7 @@ export class QuizSearchPage extends React.Component {
         })
         .then(data => data.json())
     }
-
+    
 
     render() {
         return (
