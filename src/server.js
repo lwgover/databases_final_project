@@ -90,7 +90,7 @@ app.use('/UsersQuizzes',(req, res) => {
   let searchTerm = req.body.searchTerm;
   let results = database.searchQuizByUser(searchTerm);
 
-  if (results === undefined) {
+  if (results === undefined || results === []) {
     results = null;
   }
 
