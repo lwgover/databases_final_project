@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom"
 
 function LandingPageButton() {
-    return <Link to="/TakeQuizzesPage" class="nav-link">
+    return <Link to="/SearchQuizzes" class="nav-link">
         <button class="btn btn-primary" > 
             <span style={{"fontSize": "24px"}}>
                 Take a Quiz!
