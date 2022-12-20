@@ -121,16 +121,13 @@ export class UserPage extends React.Component {
     render() {
         const style = {
             margin: "auto",
-            padding: "0% 5% 10% 5%",
+            padding: "0% 5% 0% 5%",
             color: "Black"
         }
         return (
             <div style={style}>
                 <div style={{ "fontSize": "96px" }}>
                     <p>{this.state.username}</p>
-                </div>
-                <div id="userStuff">
-                    {this.UserStuff()}
                 </div>
                 <div id="quizzes">
                     <form onSubmit={this.handleQuizzesSubmit}>
@@ -141,6 +138,9 @@ export class UserPage extends React.Component {
                     <div>
                         {this.displayUserQuizzes()}
                     </div>
+                </div>
+                <div id="userStuff">
+                    {this.UserStuff()}
                 </div>
             </div>)
     }
